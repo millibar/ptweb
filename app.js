@@ -38,6 +38,8 @@ passport.use(new TwitterStrategy({
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var loginRouter = require('./routes/login');
+var logoutRouter = require('./routes/logout');
 
 var app = express();
 app.use(helmet());
@@ -58,6 +60,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', indexRouter);
+app.use('/login', loginRouter);
+app.use('/logout', logoutRouter);
 app.use('/users', ensureAuthenticated, usersRouter);
 
 app.get('/auth/twitter', passport.authenticate('twitter'));
@@ -66,14 +70,7 @@ app.get('/auth/twitter/callback',
   passport.authenticate('twitter', { successRedirect: '/', 
                                      failureRedirect: '/login'}));
 
-app.get('/login', function(req, res) {
-  res.render('login');
-});
 
-app.get('/logout', function(req, res) {
-  req.logout();
-  res.redirect('/');
-});
 
 // Routerを登録するapp.use関数に与える第2引数用の関数。そのパスへのアクセスに認証を必要とさせる。
 function ensureAuthenticated(req, res, next) {

@@ -175,7 +175,40 @@ XITbP4g5Eu0rEmPQutH08MpFZw20cfEQB4k7o0htu44XFfOqwp
     </tr>
   </table>
 
+  <h1>2021.1.11</h1>
 
+  <p>N予備校の「16.認証の実装とテスト」に沿って最初のコミットを行った。</p>
+  <pre>
+echo "node_modules/" > .gitignore
+git init
+git add .
+git commit -m "first commit"
+  </pre>
+
+  <p>routes/にlogin.jsとlogout.jsを作成した。</p>
+
+  <p>テスト用のモジュールをインストールした。</p>
+<pre>
+yarn add mocha --dev
+yarn add supertest --dev
+yarn add passport-stub --dev
+</pre>
+<p>下記バージョンがインストールされた。</p>
+<ul>
+  <li>mocha@8.2.1</li>
+  <li>supertest@6.0.1</li>
+  <li>passport-stub@1.1.1</li>
+</ul>
+
+<p>packege.jsonにtestを追加した。</p>
+<pre>
+  "test": "node_modules/mocha/bin/mocha --timeout 10000"
+</pre>
+
+<p>test/test.jsにテストを追加した。</p>
+<pre>
+yarn test
+</pre>
 
   
 
