@@ -8,7 +8,7 @@ var helmet = require('helmet');
 var session = require('express-session');
 var passport = require('passport');
 
-console.log('モデルの読み込み前');
+
 
 
 // モデルの読み込み
@@ -20,7 +20,7 @@ var LegRaise = require('./models/big6').LegRaise;
 var Bridge = require('./models/big6').Bridge;
 var Handstand = require('./models/big6').Handstand;
 
-console.log('syncの読み込み前');
+
 
 User.sync().then(() => {
   const Tables = [Pushup, Squat, Pullup, LegRaise, Bridge, Handstand];
@@ -68,7 +68,6 @@ passport.use(new TwitterStrategy({
 ));
 
 
-console.log('Routerの読み込み前');
 
 var indexRouter = require('./routes/index');
 var big6Router = require('./routes/big6');
