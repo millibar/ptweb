@@ -3,17 +3,12 @@ html, body {
   padding: 0;
 }
 
-_body > * {
-  outline: 1px solid red;
-}
-
 body {
   max-width: 500px;
   margin: 0 auto;
   padding: 0 0 10px;
   font-size: 16px;
   position: relative;
-  outline: 1px solid red;
 }
 
 #setting {
@@ -23,6 +18,7 @@ body {
   display: block;
   top: 10px;
   right: 10px;
+  z-index: 10;
 }
 
 /* 歯車のSVG https://icooon-mono.com/00001/ */
@@ -118,21 +114,36 @@ header h1 {
 /* ==================== */
 
 /* ==================== */
+
+/* ==================== */
+/* 記録の入力フォームを表示したときに裏のボタンを押せないようにオーバーレイする */
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 5;
+  background: #ccc;
+  opacity: 0.5; 
+}
+
+
+
+/* ==================== */
 /* 記録の入力フォーム */
 form {
-  margin: 10px;
-  padding: 0 0 1px;
-  box-shadow: 0 3px 5px #ddd;
   display: none;
 }
 
 form.appear { /* EditViewから切り替える */
   display: block;
-  position: absolute;
-  left: 10px;
-  right: 10px;
-  margin: 0;
+  position: fixed; /* 包含ブロックはビューポートになる（bodyではない） */
+  width: auto;
+  margin: 10px;
+  padding: 0 0 1px;
   background: #fff;
+  box-shadow: 0 3px 6px #aaa;
   z-index: 10;
   animation-duration: 0.3s;
   animation-timing-function: ease-out; 
@@ -403,6 +414,7 @@ input:disabled {
 
 #radar li {
   position: absolute;
+  font-size: 90%;
   /* topとleftはスクリプトで決める */
 }
 
@@ -488,36 +500,46 @@ polygon.score10 {
 
 #date-list li {
   margin: 0;
-  padding: 0 10px;
+  padding: 5px 10px;
   border-bottom: 1px solid #ddd;
+  border-left: 5px solid transparent;
 }
 
-li.has-data {
-  border-left: 4px solid lightblue;
+#date-list li.has-data {
+  border-left: 5px solid lightblue;
+  /*display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-template-areas:
+    "date step"
+    "date value";
+  align-items: center;*/
 }
 
-#date-list a {
-  text-decoration: none;
-  color: #333;
-  display: block;
-  position: relative;
-  height: 2.4rem;
-  line-height: 2.4rem;
+/*
+#date-list li .date {
+  grid-area: date;
+  
+}
+*/
+
+#date-list li .step {
+  /*grid-area: step;
+  font-size: 10px;
+  padding-left: 10px;*/
+  font-size: 12px;
+  margin-left: 10px;
+  color: #666;
 }
 
-#date-list a::after{ /* thanks https://wemo.tech/122 */
-  content: "";
-  display: block;
-  width: 8px;
-  height: 8px;
-  position: absolute;
-  right: 0;
-  top: calc(50% - 6px); /* 8px - border 2px分 */
-  border-top: solid 2px;
-  border-right: solid 2px;
-  transform: rotate(45deg);
-  color: #ccc;
+#date-list li .value {
+  /*grid-area: value;
+  font-size: 10px;
+  padding-left: 10px;*/
+  font-size: 12px;
+  margin-left: 10px;
+  color: #666;
 }
+
 
 #next {
   display: block;

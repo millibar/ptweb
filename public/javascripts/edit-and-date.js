@@ -13,7 +13,7 @@ import { idb } from './idb.js';
  * @param {number} days 日付の数
  */
 async function createDateList(big6, days) {
-  // 今日を起点に10日分のDateItemを作る
+  // 今日を起点にdays日分のDateItemを作る
   const todayInt = toDateInt(new Date());
   const dateIntList = makeDateIntList(todayInt, days);
 
@@ -35,7 +35,7 @@ async function createDateList(big6, days) {
   dateController.init();
 }
 
-createDateList(big6, 15);
+createDateList(big6, 10);
 
 const editController = new EditController(big6);
 editController.init();

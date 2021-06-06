@@ -14,9 +14,15 @@ export class EditView {
   showEditForm(editModel) {
     const yyyymmdd = splitDateInt(editModel.getDateInt());
     const span = this.form.querySelector('#date');
-    span.textContent = `${yyyymmdd[0]}/${yyyymmdd[1]}/${yyyymmdd[2]}`;
+    span.textContent = `${yyyymmdd[0]}.${yyyymmdd[1]}.${yyyymmdd[2]}`;
     this.form.classList.add('appear');
     this.form.classList.remove('hidden');
+
+    // オーバーレイ
+    const body = document.querySelector('body');
+    const div = document.createElement('div');
+    div.setAttribute('id', 'overlay');
+    body.appendChild(div);
   }
 
   /**
@@ -25,6 +31,10 @@ export class EditView {
   hideEditForm() {
     this.form.classList.remove('appear');
     this.form.classList.add('hidden');
+
+    const body = document.querySelector('body');
+    const div = document.getElementById('overlay');
+    body.removeChild(div);
   }
 
   /**
