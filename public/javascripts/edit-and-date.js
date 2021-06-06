@@ -13,6 +13,9 @@ import { idb } from './idb.js';
  * @param {number} days 日付の数
  */
 async function createDateList(big6, days) {
+
+  const startTime = performance.now();
+
   // 今日を起点にdays日分のDateItemを作る
   const todayInt = toDateInt(new Date());
   const dateIntList = makeDateIntList(todayInt, days);
@@ -33,6 +36,9 @@ async function createDateList(big6, days) {
 
   const dateController = new DateController(dateItems);
   dateController.init();
+
+  const endTime = performance.now();
+  console.log('日付リスト作成時間', endTime - startTime);
 }
 
 createDateList(big6, 10);
