@@ -9,6 +9,9 @@ body {
   padding: 0 0 10px;
   font-size: 16px;
   position: relative;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out; 
+  animation-name: open;
 }
 
 #setting {
@@ -148,8 +151,6 @@ form.appear { /* EditViewから切り替える */
   animation-duration: 0.3s;
   animation-timing-function: ease-out; 
   animation-name: open;
-  overflow: hidden;
-
 }
 
 @keyframes open {
@@ -319,7 +320,7 @@ input:disabled {
 #daily-table caption {
   font-size: 16px;
   font-weight: normal;
-  text-align: left;
+  text-align: center;
 }
 
 #daily-table th {
