@@ -9,6 +9,12 @@ body {
   padding: 0 0 10px;
   font-size: 16px;
   position: relative;
+  font-family: "Helvetica Neue",
+  Arial,
+  "Hiragino Kaku Gothic ProN",
+  "Hiragino Sans",
+  Meiryo,
+  sans-serif;/* https://ics.media/entry/200317/ */
   /*animation-duration: 0.5s;
   animation-timing-function: ease-out; 
   animation-name: open;*/
@@ -16,18 +22,19 @@ body {
 
 #setting {
   position: absolute;
-  width: 28px;
-  height: 28px;
+  width: 30px;
+  height: 30px;
   display: block;
   top: 10px;
   right: 10px;
   z-index: 10;
+  text-align: right;
 }
 
 /* 歯車のSVG https://icooon-mono.com/00001/ */
 #setting-icon {
-  width: 28px;
-  height: 28px;
+  width: 25px;
+  height: 25px;
   fill: rgb(58, 171, 210);
   filter: drop-shadow(0 1px 1px #aaa);
   
@@ -415,7 +422,6 @@ input:disabled {
 
 #radar li {
   position: absolute;
-  font-size: 90%;
   visibility: hidden; /* スクリプトで外す */
   /* topとleftはスクリプトで決める */
 }
@@ -502,9 +508,12 @@ polygon.score10 {
 
 #date-list li {
   margin: 0;
-  padding: 5px 10px;
+  padding: 6px 10px;
   border-bottom: 1px solid #ddd;
   border-left: 5px solid transparent;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out; 
+  animation-name: open;
 }
 
 #date-list li.has-data {
@@ -558,6 +567,9 @@ polygon.score10 {
   color: #0acafa;
   position: relative;
   cursor: pointer;
+  animation-duration: 1s;
+  animation-timing-function: ease-out; 
+  animation-name: open;
 }
 
 #next::after{ /* thanks https://wemo.tech/122 */

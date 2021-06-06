@@ -111,21 +111,24 @@ function setLabel(polygon, elements) {
     switch (i) {
       case 0:
         xOffset = -w/2;
-        yOffset = -h;
+        yOffset = -h - 3;
         break;
       case 1:
+        xOffset = 3;
         yOffset = -h;
         break;
       case 2:
+        xOffset = 3;
         break;
       case 3:
         xOffset = -w/2;
+        yOffset = 3;
         break;
       case 4:
-        xOffset = -w;
+        xOffset = -w - 3;
         break;
       case 5:
-        xOffset = -w;
+        xOffset = -w - 3;
         yOffset = -h;
         break;
     }
@@ -175,7 +178,7 @@ function drawScore(polygon, scores, className) {
 const radar = document.getElementById('radar');
 
 const svg = radar.querySelector('svg');
-const r = 0.7; // レーダーチャートの大きさ（1がsvgの縦幅いっぱい）
+const r = 0.65; // レーダーチャートの大きさ（1がsvgの縦幅いっぱい）
 
 // レーダーチャートの外枠を描く
 const outerHexagon = createPolygon(svg, 6, r, 'outer');
