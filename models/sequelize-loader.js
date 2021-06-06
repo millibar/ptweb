@@ -2,9 +2,15 @@
 
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize(
-  'postgres://postgres:postgres@localhost/prisoner_training',
+  process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost/prisoner_training',
   {
-    operatorsAlizses: false
+    //operatorsAlizses: false
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    }
   }
 );
 

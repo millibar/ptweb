@@ -1,0 +1,7 @@
+{
+  "name": "ptweb",
+  "description": "プリズナートレーニングの記録用Webアプリ",
+  "logo": "",
+  "keywords": ["node"],
+  "image": "heroku/nodejs"
+}
