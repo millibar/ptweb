@@ -3,6 +3,7 @@ var router = express.Router();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
+  console.log('get /');
   let DB_NAME = '';
   if (req.user) {
     const u = require('../myUtil');

@@ -4,7 +4,7 @@ const Sequelize = require('sequelize');
 const sequelize = new Sequelize(
   process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost/prisoner_training',
   {
-    //operatorsAlizses: false
+    operatorsAliases: false,
     dialectOptions: {
       ssl: {
         require: true,
