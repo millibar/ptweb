@@ -1,8 +1,613 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+html, body {
+  margin: 0;
+  padding: 0;
 }
 
-a {
-  color: #00B7FF;
+_body > * {
+  outline: 1px solid red;
+}
+
+body {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0 0 10px;
+  font-size: 16px;
+  position: relative;
+  outline: 1px solid red;
+}
+
+#setting {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  display: block;
+  top: 10px;
+  right: 10px;
+}
+
+/* 歯車のSVG https://icooon-mono.com/00001/ */
+#setting-icon {
+  width: 28px;
+  height: 28px;
+  fill: rgb(58, 171, 210);
+  filter: drop-shadow(0 1px 1px #aaa);
+  
+}
+
+/* twitterのSVG https://icooon-mono.com/00226 */
+#twitter-icon {
+  width: 24px;
+  height: 24px;
+  fill: #0acafa;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+.user-info #twitter-icon {
+  position: static;
+  fill: #ccc;
+}
+
+.user-info #twitter-icon.active {
+  fill: #0acafa;
+}
+
+header {
+  background: #efefef;
+  margin: 0 0 16px;
+  padding: 10px;
+  box-shadow: 0 3px 3px #ccc;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+header nav {
+  position: absolute;
+  left: 10px;
+  margin: 0;
+  padding: 0;
+  max-width: 8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #0acafa;
+}
+
+header a {
+  text-decoration: none;
+  color: #0acafa;
+  padding: 0;
+}
+
+header a.back {
+  position: relative;
+  padding-left: 16px;
+}
+
+header a.back::after{ /* thanks https://wemo.tech/122 */
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  left: 0;
+  top: calc(50% - 2px);/* ボーダーの太さ分を引く*/
+  border-top: solid 2px;
+  border-right: solid 2px;
+  transform: rotate(225deg) translateY(50%);
+  color: inherit;
+}
+
+header a#save {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+header h1 {
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+/* ==================== */
+
+/* ==================== */
+/* 記録の入力フォーム */
+form {
+  margin: 10px;
+  padding: 0 0 1px;
+  box-shadow: 0 3px 5px #ddd;
+  display: none;
+}
+
+form.appear { /* EditViewから切り替える */
+  display: block;
+  position: absolute;
+  left: 10px;
+  right: 10px;
+  margin: 0;
+  background: #fff;
+  z-index: 10;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out; 
+  animation-name: open;
+  overflow: hidden;
+
+}
+
+@keyframes open {
+  from {
+    opacity: 0;
+    
+  }
+
+  to {
+    opacity: 1;
+    
+  }
+}
+
+form.hidden  { /* EditViewから切り替える */
+  display: none;
+}
+
+
+form h2 {
+  background: #e08c75;
+  color: #fff;
+  font-weight: bold;
+  margin: 0 0 10px;
+  padding: 7px 0 5px;
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+#cancel,
+#save {
+  font-weight: normal;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+form h3 {
+  margin: 0 10px;
+  padding: 0;
+}
+
+form select {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  font-size: 1rem;
+  text-overflow: ellipsis;
+}
+
+form dl {
+  margin: 10px;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 3.5rem 1fr 1fr;
+  grid-template-areas:
+   "set1-title set1 set1Alt"
+   "set2-title set2 set2Alt"
+   "set3-title set3 set3Alt";
+}
+
+form input[type="number"] {
+  width: 100%;
+  box-sizing: border-box;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  font-size: 1rem;
+  text-align: center;
+}
+
+form dt,
+form dd {
+  margin: 0;
+  padding: 0;
+  line-height: 2;
+}
+
+.set1-title {
+  grid-area: set1-title;
+}
+
+.set1 {
+  grid-area: set1;
+  padding-right: 5px;
+}
+
+.set1Alt {
+  grid-area: set1Alt;
+  padding-left: 5px;
+}
+
+.set2-title {
+  grid-area: set2-title;
+}
+
+.set2 {
+  grid-area: set2;
+  padding-right: 5px;
+}
+
+.set2Alt {
+  grid-area: set2Alt;
+  padding-left: 5px;
+}
+
+.set3-title {
+  grid-area: set3-title;
+}
+
+.set3 {
+  grid-area: set3;
+  padding-right: 5px;
+}
+
+.set3Alt {
+  grid-area: set3Alt;
+  padding-left: 5px;
+}
+
+input:disabled {
+  color: #ccc;
+}
+/* ==================== */
+
+/* ==================== */
+/* トレーニング・ゴール */
+#training-goal {
+  margin: 0 10px;
+  padding: 10px;
+  background: #f7f7f7;
+  font-size: 0.95rem;
+}
+
+#training-goal h4 {
+  font-size: 100%;
+  margin: 0 0 10px;
+  padding: 0;
+}
+
+#training-goal ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+/* ==================== */
+
+/* ==================== */
+/* 最近の〇日 */
+#daily-table {
+  border-collapse: separate;
+  border-spacing: 1px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  border: none;
+}
+
+#daily-table * {
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-sizing: border-box;
+}
+
+#daily-table caption {
+  font-size: 16px;
+  font-weight: normal;
+  text-align: left;
+}
+
+#daily-table th {
+  font-size: 10px;
+  font-weight: normal;
+  text-align: left;
+  padding-left: 3px
+}
+
+#daily-table td {
+  background: #eee;
+}
+
+/*
+#daily-table td.has-data {
+
+}
+*/
+
+#daily-table td.step1 {
+  background: #86B81B;
+}
+
+#daily-table td.step2 {
+  background: #009140;
+}
+
+#daily-table td.step3 {
+  background: #00958D;
+}
+
+#daily-table td.step4 {
+  background: #0097DB;
+}
+
+#daily-table td.step5 {
+  background: #0062AC;
+}
+
+#daily-table td.step6 {
+  background: #1B1C80;
+}
+
+#daily-table td.step7 {
+  background: #8A017C;
+}
+
+#daily-table td.step8 {
+  background: #D60077;
+}
+
+#daily-table td.step9 {
+  background: #D7004A;
+}
+
+#daily-table td.step10 {
+  background: #D7000F;
+}
+
+#daily-table td.level1 {
+  opacity: 0.3;
+}
+
+#daily-table td.level2 {
+  opacity: 0.6;
+}
+
+#daily-table td.level3 {
+  opacity: 1;
+}
+
+#daily-table tr:nth-child(even) {
+  background: #eee;
+}
+/* ==================== */
+
+
+/* ==================== */
+/* レーダーチャート */
+#radar {
+  max-width: 400px;
+  max-height: 400px;
+  margin: 0 auto;
+  position: relative;
+}
+
+#radar ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#radar li {
+  position: absolute;
+  /* topとleftはスクリプトで決める */
+}
+
+#radar a {
+  text-decoration: none;
+  color: #0acafa;
+  font-weight: bold;
+}
+
+polygon.outer {
+  fill: none;
+  stroke: #999;
+  stroke-width: 0.4;
+}
+
+polygon.inner {
+  fill: none;
+  stroke: #ddd;
+  stroke-width: 0.2;
+}
+
+polygon.score1 {
+  fill: red;
+  opacity: 0.1;
+}
+
+polygon.score2 {
+  fill: red;
+  opacity: 0.1;
+}
+
+polygon.score3 {
+  fill: red;
+  opacity: 0.1;
+}
+
+polygon.score4 {
+  fill: red;
+  opacity: 0.1;
+}
+
+polygon.score5 {
+  fill: red;
+  opacity: 0.1;
+}
+
+polygon.score6 {
+  fill: red;
+  opacity: 0.1;
+}
+
+polygon.score7 {
+  fill: red;
+  opacity: 0.1;
+}
+
+polygon.score8 {
+  fill: red;
+  opacity: 0.1;
+}
+
+polygon.score9 {
+  fill: red;
+  opacity: 0.1;
+}
+
+polygon.score10 {
+  fill: red;
+  opacity: 0.1;
+}
+
+
+/* ==================== */
+
+
+/* ==================== */
+/* 日付選択 */
+#date-list {  
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#date-list li {
+  margin: 0;
+  padding: 0 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+li.has-data {
+  border-left: 4px solid lightblue;
+}
+
+#date-list a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+  position: relative;
+  height: 2.4rem;
+  line-height: 2.4rem;
+}
+
+#date-list a::after{ /* thanks https://wemo.tech/122 */
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  right: 0;
+  top: calc(50% - 6px); /* 8px - border 2px分 */
+  border-top: solid 2px;
+  border-right: solid 2px;
+  transform: rotate(45deg);
+  color: #ccc;
+}
+
+#next {
+  display: block;
+  margin: 10px auto;
+  padding: 2px 0 0;
+  background: #fcfcfc;
+  text-indent: 0.5rem;
+  width: 10rem;
+  line-height: 2.4;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 1px 1px #ddd;
+  text-decoration: none;
+  color: #0acafa;
+  position: relative;
+  cursor: pointer;
+}
+
+#next::after{ /* thanks https://wemo.tech/122 */
+  content: "";
+  display: block;
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  left: 12px;
+  top: calc(50% - 6px);
+  border-top: solid 2px;
+  border-right: solid 2px;
+  transform: rotate(135deg);
+  color: #ccc;
+}
+
+#next:active {
+  position: relative;
+  top: 1px;
+}
+
+/* ==================== */
+
+
+/* ==================== */
+/* 設定 */
+.user-info,
+.data-manage {
+  margin: 0 10px 20px;
+}
+
+.user-info h2,
+.data-manage h2 {
+  font-size: 100%;
+  font-weight: normal;
+  margin: 0 0 10px;
+}
+
+.user-info ul,
+.data-manage ul {
+  margin: 10px 0;
+  padding: 0;
+  list-style: none;
+}
+
+.user-info li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  padding: 6px 0;
+}
+
+#user-name {
+  margin: 0 5px;
+  flex-grow: 1;
+}
+
+#auth {
+  text-decoration: none;
+  font-size: 90%;
+  display: inline-block;
+  box-shadow: 0 1px 1px #ccc;
+  border-radius: 6px;
+  padding: 0 12px;
+  color: #0acafa;
+}
+
+.user-info p {
+  font-size: 90%;
+  color: #999;
+}
+
+.data-manage.hidden {
+  display: none;
 }

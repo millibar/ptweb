@@ -4,7 +4,7 @@ const router = express.Router();
 
 router.get('/', (req, res, next) => {
   req.logout();
-  res.redirect('/');
+  res.redirect('/setting');
 });
 
 module.exports = router;

@@ -1,0 +1,46 @@
+extends layout
+
+block content
+  <script>const big6 = '#{big6}';</script>
+  <header>
+    <nav><a href="../" class="back">TOP</a></nav>
+    <h1>#{title}</h1>
+  </header>
+
+  <form>
+    <h2><span id="cancel">×</span><span id="date">YYYY/MM/DD</span><span id="save">保存</span></h2>
+
+    <h3><select id="step"></select></h3>
+
+    <div id="training-goal">
+      <h4>トレーニング・ゴール</h4>
+      <ul>
+        <li>初心者の標準：<span id="level1"></span></li>
+        <li>中級者の標準：<span id="level2"></span></li>
+        <li>上級者の標準：<span id="level3"></span></li>
+      </ul>
+    </div>
+
+    <dl>
+      <dt class="set1-title">SET 1</dt>
+      <dd class="set1"><input type="number" name="set1" id="set1" min="0"></dd>
+      <dd class="set1Alt"><input type="number" name="set1Alt" id="set1Alt" min="0"></dd>
+
+      <dt class="set2-title">SET 2</dt>
+      <dd class="set2"><input type="number" name="set2" id="set2" min="0"></dd>
+      <dd class="set2Alt"><input type="number" name="set2Alt" id="set2Alt" min="0"></dd>
+
+      <dt class="set3-title">SET 3</dt>
+      <dd class="set3"><input type="number" name="set3" id="set3" min="0"></dd>
+      <dd class="set3Alt"><input type="number" name="set3Alt" id="set3Alt" min="0"></dd>
+    </dl>
+
+  </form>
+
+  <ul id="date-list">
+    
+  </ul>
+
+  <div id="next">次の10日分</div>
+
+  <script type="module" src="/javascripts/edit-and-date.js"></script>
