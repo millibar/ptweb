@@ -87,6 +87,7 @@ function getPoints (polygon) {
  * @param {NodeList} elements 多角形の各頂点のラベルとなるHTML要素のリスト
  */
 function setLabel(polygon, elements) {
+
   const points = getPoints(polygon);
 
   const svg = polygon.parentNode;
@@ -130,6 +131,7 @@ function setLabel(polygon, elements) {
     }
     li.style.left = `${x + xOffset}px`;
     li.style.top = `${y + yOffset}px`;
+    li.style.visibility = 'visible';
   }
 }
 
