@@ -330,6 +330,25 @@ input:disabled {
   text-align: center;
 }
 
+#daily-table caption span {
+  display: block;
+}
+
+#first {
+  font-size: 12px;
+  float: left;
+  color: #999;
+  margin: 10px 0 0 3px;
+}
+
+#latest {
+  font-size: 12px;
+  float: right;
+  color: #999;
+  margin: 10px 3px 0 0;
+}
+
+
 #daily-table th {
   font-size: 10px;
   font-weight: normal;

@@ -2,7 +2,7 @@ console.log('index.js loaded.');
 
 import { storage } from './storage.js';
 import { idb } from './idb.js';
-import { makeDateIntList, toDateInt } from './util.js';
+import { makeDateIntList, toDateInt, splitDateInt } from './util.js';
 import { getLevel } from './big6.js';
 
 if (DB_NAME) {
@@ -318,8 +318,19 @@ async function createDailyTable(tableWidth, thWidth, minTdWidth) {
   const big6Labels = ['PUSHUP', 'SQUAT', 'PULLUP', 'LEG RAISE', 'BRIDGE', 'HANDSTAND'];
 
   const table = document.getElementById('daily-table');
-  const caption = table.querySelector('caption');
-  caption.textContent = `最近の${days}日`;
+  //const caption = table.querySelector('caption');
+  //caption.textContent = `最近の${days}日`;
+
+  const todayInt = toDateInt(new Date());
+  const dateIntList = makeDateIntList(todayInt, days).reverse();
+  const span1 = document.getElementById('first');
+  const span2 = document.getElementById('recent');
+  const span3 = document.getElementById('latest');
+  const yyyymmdd1 = splitDateInt(dateIntList[0])
+  span1.textContent = `${yyyymmdd1[0]}.${yyyymmdd1[1]}.${yyyymmdd1[2]}`;
+  span2.textContent =`最近の${days}日`;
+  const yyyymmdd2 = splitDateInt(dateIntList[dateIntList.length - 1]);
+  span3.textContent = `${yyyymmdd2[1]}.${yyyymmdd2[2]}`;
 
   for (let row = 0; row < big6Names.length; row++) {
     const big6 = big6Names[row];
@@ -332,9 +343,6 @@ async function createDailyTable(tableWidth, thWidth, minTdWidth) {
     th.style.height = `${cellWidth}px`;
 
     tr.appendChild(th);
-
-    const todayInt = toDateInt(new Date());
-    const dateIntList = makeDateIntList(todayInt, days).reverse();
     const dataList = await idb.bulkGet(big6, dateIntList); // データのない日はundefined
 
     for (let col = 0; col < days; col++) {
