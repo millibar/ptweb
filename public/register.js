@@ -1,6 +1,6 @@
 'use strict';
-console.log('register.js is loaded.');
-
+console.log('register.js is disabled.');
+/*
 const swURL = '/service-worker.js';
 
 if ('serviceWorker' in navigator) {
@@ -13,3 +13,4 @@ if ('serviceWorker' in navigator) {
     }
   });
 }
+*/
