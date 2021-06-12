@@ -1,7 +1,7 @@
 'use strict';
 console.log('register.js is loaded.');
 
-const swURL = './service-worker.js';
+const swURL = '/service-worker.js';
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', async () => {
