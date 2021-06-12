@@ -125,6 +125,8 @@ class Idb {
    * @returns {Array.<Object>} recordの配列（recordのない日はundefined）
    */
   async bulkGet(store, dateIntList, includesDeleted = false) {
+    console.log('store:', store);
+    console.log('dataInteList:', dateIntList);
     let records;
     switch (store) {
       case 'pushup':
