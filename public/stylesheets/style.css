@@ -3,7 +3,7 @@
   user-select: none;
 }
 
-a {
+a, span {
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -15,7 +15,6 @@ html {
   font-size: 16px;
   color: #000;
   background: #fff;
-  position: fixed;
 }
 
 body {
@@ -536,11 +535,15 @@ polygon.score10 {
   margin: 0;
   padding: 0;
   list-style: none;
+  min-height: 440px;
 }
 
 #date-list li {
   margin: 0;
-  padding: 8px 10px;
+  padding: 0 10px;
+  height: 44px;
+  line-height: 44px;
+  box-sizing: border-box;
   border-bottom: 1px solid #ddd;
   border-left: 5px solid transparent;
   animation-duration: 0.5s;
