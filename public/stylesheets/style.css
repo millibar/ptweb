@@ -1,13 +1,27 @@
-html, body {
+/* PWA向け */
+:not(input, textarea) {
+  user-select: none;
+}
+
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
   margin: 0;
   padding: 0;
+  width: 100%;
+  height: 100%;
+  font-size: 16px;
+  color: #000;
+  background: #fff;
+  position: fixed;
 }
 
 body {
   max-width: 500px;
   margin: 0 auto;
   padding: 0 0 10px;
-  font-size: 16px;
   position: relative;
   font-family: "Helvetica Neue",
   Arial,
@@ -60,9 +74,11 @@ body {
 }
 
 header {
+  box-sizing: border-box;
+  height: 44px;
   background: #efefef;
   margin: 0 0 16px;
-  padding: 10px;
+  padding: 0 10px;
   box-shadow: 0 3px 3px #ccc;
   position: sticky;
   top: 0;
@@ -74,11 +90,7 @@ header nav {
   left: 10px;
   margin: 0;
   padding: 0;
-  max-width: 8rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  color: #0acafa;
+  line-height: 44px; /* headerの高さと同じ */
 }
 
 header a {
@@ -106,24 +118,17 @@ header a.back::after{ /* thanks https://wemo.tech/122 */
   color: inherit;
 }
 
-header a#save {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  margin: 0;
-  padding: 0;
-}
-
 header h1 {
   font-size: 1rem;
   font-weight: bold;
   text-align: center;
   margin: 0;
   padding: 0;
+  line-height: 8vh; /* headerの高さと同じ */
 }
 /* ==================== */
 
-/* ==================== */
+
 
 /* ==================== */
 /* 記録の入力フォームを表示したときに裏のボタンを押せないようにオーバーレイする */
@@ -134,7 +139,7 @@ header h1 {
   right: 0;
   bottom: 0;
   z-index: 5;
-  background: #ccc;
+  background: #aaa;
   opacity: 0.5; 
 }
 
@@ -181,11 +186,12 @@ form h2 {
   background: #e08c75;
   color: #fff;
   font-weight: bold;
-  margin: 0 0 10px;
-  padding: 7px 0 5px;
   font-size: 1rem;
+  margin: 0 0 1rem;
+  padding: 7px 0 5px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 #cancel,
@@ -196,7 +202,8 @@ form h2 {
 }
 
 form h3 {
-  margin: 0 10px;
+  font-size: 1rem;
+  margin: 0 10px 1rem;
   padding: 0;
 }
 
@@ -211,7 +218,8 @@ form select {
 }
 
 form dl {
-  margin: 10px;
+  font-size: 1rem;
+  margin: 0 10px 1rem;
   padding: 0;
   display: grid;
   grid-template-columns: 3.5rem 1fr 1fr;
@@ -287,10 +295,10 @@ input:disabled {
 /* ==================== */
 /* トレーニング・ゴール */
 #training-goal {
-  margin: 0 10px;
+  margin: 0 10px 16px;
   padding: 10px;
   background: #f7f7f7;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
 }
 
 #training-goal h4 {
@@ -303,6 +311,11 @@ input:disabled {
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+#training-goal li {
+  margin: 0.3rem 0;
+  padding: 0;
 }
 /* ==================== */
 
@@ -325,7 +338,7 @@ input:disabled {
 }
 
 #daily-table caption {
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: normal;
   text-align: center;
 }
@@ -335,14 +348,14 @@ input:disabled {
 }
 
 #first {
-  font-size: 12px;
+  font-size: 0.6rem;
   float: left;
   color: #999;
   margin: 10px 0 0 3px;
 }
 
 #latest {
-  font-size: 12px;
+  font-size: 0.6rem;
   float: right;
   color: #999;
   margin: 10px 3px 0 0;
@@ -350,7 +363,7 @@ input:disabled {
 
 
 #daily-table th {
-  font-size: 10px;
+  font-size: 0.6rem;
   font-weight: normal;
   text-align: left;
   padding-left: 3px
@@ -527,7 +540,7 @@ polygon.score10 {
 
 #date-list li {
   margin: 0;
-  padding: 6px 10px;
+  padding: 8px 10px;
   border-bottom: 1px solid #ddd;
   border-left: 5px solid transparent;
   animation-duration: 0.5s;
@@ -587,7 +600,7 @@ polygon.score10 {
   position: relative;
   cursor: pointer;
   animation-duration: 1s;
-  animation-timing-function: ease-out; 
+  animation-timing-function: ease-in; 
   animation-name: open;
 }
 
@@ -617,14 +630,14 @@ polygon.score10 {
 /* 設定 */
 .user-info,
 .data-manage {
-  margin: 0 10px 20px;
+  margin: 0 10px 2rem;
 }
 
 .user-info h2,
 .data-manage h2 {
-  font-size: 100%;
+  font-size: 1rem;
   font-weight: normal;
-  margin: 0 0 10px;
+  margin: 0 0 0.7rem;
 }
 
 .user-info ul,
@@ -644,7 +657,7 @@ polygon.score10 {
 }
 
 #user-name {
-  margin: 0 5px;
+  margin: 0 6px;
   flex-grow: 1;
 }
 

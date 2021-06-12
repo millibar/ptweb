@@ -372,3 +372,16 @@ const maxTableWidth = Math.min(500, document.body.clientWidth);
 
 createDailyTable(maxTableWidth, thWidth, minTdWidth);
 
+/* Service Workerの登録 */
+const swURL = '/javascripts/service-worker.js';
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', async () => {
+    try {
+      const reg = await navigator.serviceWorker.register(swURL);
+      console.log('Service worker registerd!', reg);
+    } catch (err) {
+      console.error('Service worker registration failed:', err);
+    }
+  });
+}

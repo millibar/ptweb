@@ -4,10 +4,12 @@ import { storage } from './storage.js';
 import { fetcher } from './fetch.js';
 
 const userName = storage.getItem('USER_NAME');
+const a = document.getElementById('auth');
 
 if (userName) {
   const li = document.getElementById('user-name');
   li.textContent = userName;
+  a.textContent = 'サインインする';
 }
 
 // twitterにサインイン済みのときのみ、HTMLを書き換える
@@ -21,8 +23,7 @@ fetcher.isAuthenticated().then(response => {
       const twitterIcon = document.getElementById('twitter-icon');
       twitterIcon.classList.add('active');
 
-      const a = document.getElementById('auth');
-      a.textContent = 'サインアウト';
+      a.textContent = 'サインアウトする';
       a.setAttribute('href', 'logout');
 
       break;
