@@ -1,5 +1,5 @@
 'use strict';
-console.log('register.js is disabled.');
+console.log('register.js is loaded.');
 
 const swURL = '/service-worker.js';
 

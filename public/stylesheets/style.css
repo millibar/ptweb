@@ -3,8 +3,14 @@
   user-select: none;
 }
 
-a, span, #next {
+.button {
   -webkit-tap-highlight-color: transparent;
+}
+
+.button:active {
+  position: relative;
+  top: 1px;
+  background-color: rgba(white, 0.05);
 }
 
 html {
@@ -23,7 +29,6 @@ body {
   max-width: 500px;
   margin: 0 auto;
   padding: 0;
-  box-shadow:  0 2px 5px #ccc;
   position: relative;
   font-family: "Helvetica Neue",
   Arial,
@@ -49,11 +54,15 @@ body {
 
 /* 歯車のSVG https://icooon-mono.com/00001/ */
 #setting-icon {
-  width: 25px;
-  height: 25px;
+  width: 24px;
+  height: 24px;
   fill: rgb(58, 171, 210);
   filter: drop-shadow(0 1px 1px #aaa);
-  
+}
+
+#setting:active svg {
+  position: relative;
+  top: 1px;
 }
 
 /* twitterのSVG https://icooon-mono.com/00226 */
@@ -62,8 +71,8 @@ body {
   height: 24px;
   fill: #0acafa;
   position: absolute;
-  top: 10px;
-  left: 10px;
+  top: 11px;
+  right: 45px;
 }
 
 .user-info #twitter-icon {
@@ -442,8 +451,8 @@ input:disabled {
 /* ==================== */
 /* 週の記録 */
 #weekly-score {
-  margin: 10px 0 0 10px;
-  padding: 0;
+  margin: 0 10px;
+  padding: 1px 0 0;
   /*display: flex;
   justify-content: flex-start;
   align-items: baseline;*/
@@ -451,8 +460,8 @@ input:disabled {
 
 #weekly-score dt {
   font-size: 0.6rem;
-  color: #666;
-  margin: 0;
+  color: #999;
+  margin: 9px 0 0;
   padding: 0;
 }
 
@@ -473,7 +482,7 @@ input:disabled {
   width: 100%;
   min-width: 250px;
   min-height: 250px;
-  margin: 5vh auto 0;
+  margin: 0 auto 0;
   position: relative;
 }
 
@@ -578,7 +587,7 @@ polygon.score10 {
   box-sizing: border-box;
   border-bottom: 1px solid #ddd;
   border-left: 5px solid transparent;
-  animation-duration: 0.5s;
+  animation-duration: 0.3s;
   animation-timing-function: ease-out; 
   animation-name: open;
 }
@@ -648,11 +657,6 @@ polygon.score10 {
   border-right: solid 2px;
   transform: rotate(135deg);
   color: #ccc;
-}
-
-#next:active {
-  position: relative;
-  top: 1px;
 }
 
 /* ==================== */
