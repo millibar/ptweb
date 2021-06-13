@@ -134,7 +134,11 @@ export class EditController {
     const keys = ['set1', 'set1Alt', 'set2', 'set2Alt', 'set3', 'set3Alt'];
     for (const key of keys) {
       const input = document.getElementById(key);
-      input.addEventListener('change', () => {
+      input.addEventListener('change', (event) => {
+        if (!Number(event.target.value)) {
+          console.log('数値以外が入力されました');
+          event.target.value = '';
+        } 
         const value = Number(input.value); // 値なしは0になる
         this.handleInputChange(key, value);
       });
