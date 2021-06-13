@@ -296,7 +296,7 @@ async function drawAllScore () {
 drawAllScore();
 
 /**
- * 対象のbig6の対象期間のすべてのbig6のレップ数の合計にステップ数をかけた値を求める
+ * 対象のbig6の対象期間のレップ数の合計にステップ数をかけた値を求める
  * @param {string} big6 
  * @param {Array.<number>} dateIntList 
  * @returns {Promise} 

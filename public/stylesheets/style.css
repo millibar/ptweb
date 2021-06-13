@@ -472,7 +472,7 @@ input:disabled {
   width: 100%;
   min-width: 250px;
   min-height: 250px;
-  margin: 5vh auto 3vh;
+  margin: 5vh auto 0;
   position: relative;
 }
 
