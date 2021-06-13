@@ -702,11 +702,12 @@ polygon.score10 {
   color: #0acafa;
 }
 
-.user-info p {
+.user-info p,
+.data-manage p {
   font-size: 90%;
   color: #999;
 }
 
-.data-manage.hidden {
+.data-manage .hidden {
   display: none;
 }

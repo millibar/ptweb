@@ -14,7 +14,7 @@ Copyright 2021 Google LLC
  limitations under the License.
  */
 
-const cacheName = 'v202106121853';
+const cacheName = 'v202106131400';
 
 const precacheResources = [
      './',
@@ -44,7 +44,7 @@ const precacheResources = [
      './javascripts/util.js'
 ];
 
-/*
+
 self.addEventListener('install', (event) => {
      console.log('Service worker install event!');
      event.waitUntil(caches.open(cacheName).then((cache) => cache.addAll(precacheResources)));
@@ -66,4 +66,16 @@ self.addEventListener('fetch', (event) => {
        }),
      );
 });
-*/
+
+
+//メッセージ受信時の処理
+self.addEventListener('message', (event) => {
+     if (event.data['command'] === 'clearCacheAll') {
+          event.waitUntil(caches.keys().then(names => {
+               for (let name of names) {
+                    console.log('cache is deleted:', name);
+                    caches.delete(name);
+               }
+          }));
+     }
+});

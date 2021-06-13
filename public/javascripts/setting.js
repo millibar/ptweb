@@ -31,3 +31,11 @@ fetcher.isAuthenticated().then(response => {
       console.log(response.message);
   }
 });
+
+const deleteCahse = document.getElementById('delete-chache');
+deleteCahse.addEventListener('click', () => {
+  const swctrl = navigator.serviceWorker.controller;
+  swctrl.postMessage({
+      'command':'clearCacheAll'
+  });
+});

@@ -20,12 +20,14 @@ block content
     <p>トレーニングのデータは端末内に保存されます。Twitterアカウントにサインインしていると、Web上のデータベースと端末の間でトレーニングデータを同期します。</p>
   </section>
 
-  <section class="data-manage hidden">
+  <section class="data-manage">
     <h2>データ管理</h2>
     <ul>
-      <li>CSVインポート</li>
-      <li>同期</li>
+      <li class="hidden">CSVインポート</li>
+      <li class="hidden">同期</li>
+      <li><button id="delete-chache">オフラインキャッシュを削除する</button></li>
     </ul>
+    <p>キャッシュを削除してもトレーニングの記録は消えません。</p>
   </section>
 
   <script type="module" src="/javascripts/setting.js"></script>
