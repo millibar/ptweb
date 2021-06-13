@@ -25,10 +25,11 @@ html {
 }
 
 body {
-  height: 100%;
+  box-sizing: border-box;
+  min-height: 100%;
   max-width: 500px;
   margin: 0 auto;
-  padding: 0;
+  padding: 0 0 1px;
   position: relative;
   font-family: "Helvetica Neue",
   Arial,
@@ -715,4 +716,25 @@ polygon.score10 {
 
 .data-manage .hidden {
   display: none;
+}
+
+.temp-alert {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 200px;
+  height: 2.5rem;
+  line-height: 2.5rem;
+  font-size: 0.9rem;
+  text-align: center;
+  background: #fff;
+  color:#000;
+  opacity: 0.8;
+  border-radius: 8px;
+  text-align: center;
+  box-shadow: 0 2px 5px #ccc;
+  z-index: 5;
 }

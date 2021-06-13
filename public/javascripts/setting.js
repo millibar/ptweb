@@ -38,4 +38,12 @@ deleteCahse.addEventListener('click', () => {
   swctrl.postMessage({
       'command':'clearCacheAll'
   });
+  const body = document.querySelector('body');
+  const div = document.createElement('div');
+  div.textContent = 'キャッシュを削除しました';
+  div.setAttribute('class', 'temp-alert');
+  body.appendChild(div);
+  setTimeout(() => {
+    body.removeChild(div);
+  }, 1000);
 });
