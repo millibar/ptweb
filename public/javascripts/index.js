@@ -295,9 +295,50 @@ async function drawAllScore () {
 
 drawAllScore();
 
+/**
+ * 対象のbig6の対象期間のすべてのbig6のレップ数の合計にステップ数をかけた値を求める
+ * @param {string} big6 
+ * @param {Array.<number>} dateIntList 
+ * @returns {Promise} 
+ */
+function totalStepReps(big6, dateIntList) {
+  return new Promise(async resolve => {
+    const records = await idb.bulkGet(big6, dateIntList);
+    let total = 0;
+    for (const record of records) {
+      if (record) {
+        total += record.set1 || 0;
+        total += record.set1Alt || 0;
+        total += record.set2 || 0;
+        total += record.set2Alt || 0;
+        total += record.set3 || 0;
+        total += record.set3Alt || 0;
+        total *= record.step;
+      }
+    }
+    resolve(total);
+  });
+}
 
+/**
+ * Weekly Scoreを計算して表示する
+ */
+function calcWeeklyScore() {
+  const todayInt = toDateInt(new Date());
+  const weekIntList = makeDateIntList(todayInt, 7);
+  const big6Names = ['pushup', 'squat', 'pullup', 'leg_raise', 'bridge', 'handstand'];
+  const weeklyScore = document.querySelector('#weekly-score dd');
+  for (const big6 of big6Names) {
+    totalStepReps(big6, weekIntList).then(total => {
+      console.log(`${big6}のWeekly Score:${total}`);
+      let score = Number(weeklyScore.textContent);
+      score += total;
+      weeklyScore.textContent = score;
+    });
+  }
+}
 
-
+calcWeeklyScore();
 
 
 /**
@@ -318,8 +359,6 @@ async function createDailyTable(tableWidth, thWidth, minTdWidth) {
   const big6Labels = ['PUSHUP', 'SQUAT', 'PULLUP', 'LEG RAISE', 'BRIDGE', 'HANDSTAND'];
 
   const table = document.getElementById('daily-table');
-  //const caption = table.querySelector('caption');
-  //caption.textContent = `最近の${days}日`;
 
   const todayInt = toDateInt(new Date());
   const dateIntList = makeDateIntList(todayInt, days).reverse();

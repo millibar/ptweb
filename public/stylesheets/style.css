@@ -3,7 +3,7 @@
   user-select: none;
 }
 
-a, span {
+a, span, #next {
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -15,13 +15,14 @@ html {
   font-size: 16px;
   color: #000;
   background: #fff;
-  overscroll-behavior-y: none; 
 }
 
 body {
+  height: 100%;
   max-width: 500px;
   margin: 0 auto;
-  padding: 0 0 10px;
+  padding: 1px 0;
+  box-shadow:  0 2px 5px #ccc;
   position: relative;
   font-family: "Helvetica Neue",
   Arial,
@@ -82,7 +83,7 @@ header {
   box-shadow: 0 3px 3px #ccc;
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 5;
 }
 
 header nav {
@@ -438,11 +439,40 @@ input:disabled {
 
 
 /* ==================== */
+/* 週の記録 */
+#weekly-score {
+  margin: 10px 0 0 10px;
+  padding: 0;
+  /*display: flex;
+  justify-content: flex-start;
+  align-items: baseline;*/
+}
+
+#weekly-score dt {
+  font-size: 0.6rem;
+  color: #666;
+  margin: 0;
+  padding: 0;
+}
+
+#weekly-score dd {
+  font-size: 1.5rem;
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+}
+
+/* ==================== */
+
+
+
+/* ==================== */
 /* レーダーチャート */
 #radar {
-  max-width: 400px;
-  max-height: 400px;
-  margin: 0 auto;
+  width: 100%;
+  min-width: 250px;
+  min-height: 250px;
+  margin: 5vh auto 3vh;
   position: relative;
 }
 
@@ -603,9 +633,6 @@ polygon.score10 {
   color: #0acafa;
   position: relative;
   cursor: pointer;
-  animation-duration: 1s;
-  animation-timing-function: ease-in; 
-  animation-name: open;
 }
 
 #next::after{ /* thanks https://wemo.tech/122 */
