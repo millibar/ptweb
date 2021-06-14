@@ -32,18 +32,19 @@ fetcher.isAuthenticated().then(response => {
   }
 });
 
-const deleteCahse = document.getElementById('delete-chache');
-deleteCahse.addEventListener('click', () => {
+const updateCahse = document.getElementById('update-chache');
+updateCahse.addEventListener('click', () => {
   const swctrl = navigator.serviceWorker.controller;
-  swctrl.postMessage({
-      'command':'clearCacheAll'
-  });
+  swctrl.postMessage({ 'command': 'clearCacheAll' });
+  
   const body = document.querySelector('body');
   const div = document.createElement('div');
-  div.textContent = 'キャッシュを削除しました';
+  div.textContent = 'キャッシュを更新しました';
   div.setAttribute('class', 'temp-alert');
   body.appendChild(div);
+
   setTimeout(() => {
     body.removeChild(div);
+    swctrl.postMessage({ 'command': 'getCache' });
   }, 1000);
 });

@@ -643,7 +643,7 @@ polygon.score10 {
   line-height: 2.4;
   text-align: center;
   border-radius: 10px;
-  box-shadow: 0 1px 1px #ddd;
+  box-shadow: 0 0px 4px #ddd;
   text-decoration: none;
   color: #0acafa;
   position: relative;
@@ -672,6 +672,9 @@ polygon.score10 {
 .user-info,
 .data-manage {
   margin: 0 10px 2rem;
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out; 
+  animation-name: open;
 }
 
 .user-info h2,
@@ -706,7 +709,7 @@ polygon.score10 {
   text-decoration: none;
   font-size: 90%;
   display: inline-block;
-  box-shadow: 0 1px 1px #ccc;
+  box-shadow: 0 0px 3px #ccc;
   border-radius: 6px;
   padding: 0 12px;
   color: #0acafa;

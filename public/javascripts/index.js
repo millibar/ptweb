@@ -2,7 +2,7 @@ console.log('index.js loaded.');
 
 import { storage } from './storage.js';
 import { idb } from './idb.js';
-import { makeDateIntList, toDateInt, splitDateInt } from './util.js';
+import { makeDateIntList, toDateInt, splitDateInt, activateButtonForiOs } from './util.js';
 import { getLevel } from './big6.js';
 
 if (DB_NAME) {
@@ -15,6 +15,8 @@ if (USER_NAME) {
   storage.setItem('USER_NAME', USER_NAME);
   storage.save();
 }
+
+activateButtonForiOs();
 
 /**
  * svg要素のviewBoxの各値をプロパティとしてもつオブジェクトを返す

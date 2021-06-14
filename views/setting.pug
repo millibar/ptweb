@@ -2,7 +2,7 @@ extends layout
 
 block content
   <header>
-    <nav><a href="../" class="back button">TOP</a></nav>
+    <nav><a href="/" class="back button">TOP</a></nav>
     <h1>#{title}</h1>
   </header>
 
@@ -25,9 +25,8 @@ block content
     <ul>
       <li class="hidden">CSVインポート</li>
       <li class="hidden">同期</li>
-      <li><button id="delete-chache" class="button">オフラインキャッシュを削除する</button></li>
+      <li><button id="update-chache" class="button">オフラインキャッシュを更新する</button></li>
     </ul>
-    <p>キャッシュを削除してもトレーニングの記録は消えません。</p>
   </section>
 
   <script type="module" src="/javascripts/setting.js"></script>

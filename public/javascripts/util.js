@@ -65,6 +65,16 @@ const makeDateIntList = (dateInt, days) => {
   return dateIntList;
 }
 
+const activateButtonForiOs = () => {
+  const nodeList = document.querySelectorAll('.button');
+  const elements = Array.from(nodeList);
+  for (const element of elements) {
+    console.log('touchstartハンドラーを追加：', element);
+    element.addEventListener('touchstart', () => {
+      
+    });
+  }
+}
 
 
 
@@ -77,4 +87,4 @@ const big6Title = {
   handstand: 'HANDSTAND PUSHUP'
 }
 
-export { getQueryValue, splitDateInt, toDateInt, makeDateIntList, big6Title };
+export { getQueryValue, splitDateInt, toDateInt, makeDateIntList, big6Title, activateButtonForiOs };
