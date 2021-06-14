@@ -14,7 +14,7 @@ Copyright 2021 Google LLC
  limitations under the License.
  */
 
-const cacheName = 'v202106142215';
+const cacheName = 'v202106142240';
 
 const precacheResources = [
      '/',

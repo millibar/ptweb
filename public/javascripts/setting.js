@@ -2,6 +2,9 @@ console.log('setting.js is loaded.');
 
 import { storage } from './storage.js';
 import { fetcher } from './fetch.js';
+import { activateButtonForiOs } from './util.js';
+
+activateButtonForiOs();
 
 const userName = storage.getItem('USER_NAME');
 const a = document.getElementById('auth');

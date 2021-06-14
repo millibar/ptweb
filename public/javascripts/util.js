@@ -69,9 +69,8 @@ const activateButtonForiOs = () => {
   const nodeList = document.querySelectorAll('.button');
   const elements = Array.from(nodeList);
   for (const element of elements) {
-    console.log('touchstartハンドラーを追加：', element);
     element.addEventListener('touchstart', () => {
-      
+      // iOSでは :active のつく要素に ontouchstart ハンドラーを追加しないとアクティブ時のスタイルの指定が効かない
     });
   }
 }

@@ -1,11 +1,12 @@
 console.log('edit-and-date.js is loaded.');
 
-import { makeDateIntList, toDateInt } from './util.js';
+import { makeDateIntList, toDateInt, activateButtonForiOs } from './util.js';
 import { DateItemModel } from './DateModel.js';
 import { DateController } from './DateController.js';
 import { EditController } from './EditController.js'
 import { idb } from './idb.js';
 
+activateButtonForiOs();
 
 /**
  * 日付のリストを作る
