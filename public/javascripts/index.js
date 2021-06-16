@@ -236,17 +236,20 @@ async function getStepLevel(big6, step) {
     switch (level) {
       case 3:
         level3 += 1;
-        if (level3 > 5) return 3;
+        level2 += 1;
+        level1 += 1;
         break;
       case 2:
         level2 += 1;
-        if (level2 > 5) return 2;
+        level1 += 1;
         break;
       case 1:
         level1 += 1;
-        if (level1 > 1) return 1;
         break;
     }
+    if (level3 > 4) { return 3; }
+    if (level2 > 4) { return 2; }
+    if (level1 > 4) { return 1; }
   }
   return 0;
 }
