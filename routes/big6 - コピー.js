@@ -162,101 +162,106 @@ for (const key of Object.keys(tables)) {
  */
 function sync(Table, bulkData, filter, res) {
   const userId = filter.userId;
+  
+  Table.findAll({ where: filter }).then(records => {
+    let hasError = false; // どこかでエラーが起こったフラグ
+    let errorMessage = '';
 
-  const responseBulkData = []; // 返却するレコードを格納する
-  const updatingBulkData = []; // 更新予定のレコードを格納する
-  const creatingBulkData = []; // 新規追加するレコードを格納する
+    // 返却用のレコードを格納する
+    const outputBulkData = [];
 
-  Table.findAll({ where: filter }).then(records => {// POSTされた範囲のレコードをDBから取得する
-    return new Promise(resolve => {
-      if (records.length) { // DB内の各レコードについて、POSTされたdataとupdatedAtを比較する
-        for (const record of records) {
-          // このrecordと同じdateIntをもつdataをbulkDataから取り出す
-          const posted = bulkData[record.dateInt]; // nullの可能性がある
-          delete bulkData[record.dateInt];
-
-          const postedDateTime = posted ? Number.parseInt(posted.updatedAt) : 0;
-          const recordDateTime = Number.parseInt(record.updatedAt); // bigIntのままだと比較できないみたいなので変換する
-
-          if (!posted || postedDateTime < recordDateTime) {
-            console.log('サーバーのDBにしかレコードがない、またはDBのレコードのほうが更新日時が新しい\n', record);
-            // 返却用のレコードリストへ追加する
-            const responseData = {
-              dateInt: record.dateInt,
-              step: record.step,
-              set1: record.set1,
-              set2: record.set2,
-              set3: record.set3,
-              set1Alt: record.set1Alt,
-              set2Alt: record.set2Alt,
-              set3Alt: record.set3Alt,
-              updatedAt: record.updatedAt,
-              deletedAt: record.deletedAt
-            }
-            responseBulkData.push(responseData)
-          } else if (posted && postedDateTime > recordDateTime) {
-            console.log(`サーバーのDBのレコードのほうが更新日時が古い：POST ${postedDateTime}, DB ${recordDateTime}`);
-            // 更新用のレコードリストへ追加する
-            const updatingData = convert(userId, posted);
-            updatingBulkData.push(updatingData);
-
-          } else {
-            console.log(`サーバーのDBのレコードとPOSTされたレコードは更新日時が同じ：${postedDateTime}`);
-            // 何もしない
-          }
-        }
-        resolve();
-      } else {
-        console.log('POSTされたデータはすべて新規レコード');
-        resolve();
-      }
-    });
-  }).then(() => {// DBのレコードを更新する
+    // 更新用のPromiseを格納する
     const updatingPromises = [];
-    for (const updatingData of updatingBulkData) {
-      const updatingFilter = { userId: userId, dateInt: updatingData.dateInt };
-      const updating = new Promise((resolve, reject) => {
-        Table.update(updatingData, { where: updatingFilter }).then(() => {
-          console.log('レコードを更新しました\n', updatingData);
-          resolve();
-        }).catch(error => {
-          console.error('レコードの更新時にエラーが発生しました\n', error);
-          reject();
-        });
-      });
-      updatingPromises.push(updating);
-    }
-    return Promise.all(updatingPromises);
-  }).then(() => { // DBに新規レコードを追加する
-    // この時点で、bulkDataにはDB内のレコードと同じdateIntのdataはなくなっている
-    // ただし、{ 20210619: null } のような、valueがnullのデータが含まれている可能性がある
-    for (const dateInt of Object.keys(bulkData)) {
-      const posted = bulkData[dateInt];
-      if (posted) {
-        const creatingData = convert(userId, posted);
-        creatingBulkData.push(creatingData);
+
+    if (records.length) {
+      for (const record of records) {
+        // DB内にあるレコードと同じdateIntのdataをbulkDataから取り出す
+        const posted = bulkData[record.dateInt]; // nullの可能性がある
+        delete bulkData[record.dateInt];
+
+        const postedDate = posted ? Number.parseInt(posted.updatedAt) : 0;
+        const recordDate = Number.parseInt(record.updatedAt);// bigIntのままだと比較できないみたいなので変換する
+        
+        if (!posted || (postedDate < recordDate)) {
+          console.log('サーバーのDBにしかレコードがない、またはDBのレコードのほうが更新日時が新しい\n', record);
+          // 返却用のレコードリストへ追加する
+          const data = {
+            dateInt: record.dateInt,
+            step: record.step,
+            set1: record.set1,
+            set1Alt: record.set1Alt,
+            set2: record.set2,
+            set2Alt: record.set2Alt,
+            set3: record.set3,
+            set3Alt: record.set3Alt,
+            updatedAt: record.updatedAt,
+            deletedAt: record.deletedAt
+          }
+          outputBulkData.push(data);
+
+        } else if (postedDate === recordDate) {
+          console.log(`サーバーのDBのレコードとPOSTされたレコードは更新日時が同じ：${postedDate}`);
+          // 何もしない
+
+        } else {
+          console.log(`サーバーのDBのレコードのほうが更新日時が古い：POST ${postedDate}, DB ${recordDate}`);
+          // DBのレコードを更新する
+          const updatingData = convert(userId, posted);
+          const updatingFilter = { userId: userId, dateInt: updatingData.dateInt };
+
+          const updating = new Promise((resolve, reject) => {
+            Table.update(updatingData, { where: updatingFilter }).then(() => {
+              console.log('レコードを更新しました\n', updatingData);
+              resolve();
+            }).catch(error => {
+              hasError = true;
+              errorMessage += `サーバーのDBのレコード更新時にエラーが発生しました：${updatingData.dateInt}\n`;
+              console.error(error)
+              reject()
+            });
+          });
+          updatingPromises.push(updating);
+        }
       }
     }
-    return new Promise((resolve, reject) => {
+    // この時点で、bulkDataにはDB内のレコードと同じdateIntのdataはなくなっている
+    // ただし、{ 20210619: null } のような、valueがnull値のデータが含まれている可能性がある
+
+    Promise.all(updatingPromises).then(() => {
+
+      // DBにはないレコードを新規レコードとして書き込む
+      const creatingBulkData = [];
+      
+      for (const dateInt of Object.keys(bulkData)) {
+        const posted = bulkData[dateInt];
+        if (posted) {
+          const creatingData = convert(userId, posted);
+          creatingBulkData.push(creatingData);
+        }
+      }
+      
       if (creatingBulkData.length) {
         Table.bulkCreate(creatingBulkData).then(() => {
           console.log(`レコードを新規作成しました:${creatingBulkData.length}件\n`, creatingBulkData);
-          resolve();
         }).catch(error => {
-          console.error('レコードの新規作成時にエラーが発生しました', error);
-          reject();
+          console.error(error);
+          hasError = true;
+          errorMessage += 'サーバーのDBへの新規レコード追加時にエラーが発生しました'
         });
+      }
+
+      if (hasError) {
+        res.json({ status: 'NG', message: errorMessage });
       } else {
-        resolve();
+        // DBにしかない、またはDBのほうが新しいレコードを返却する
+        console.log(`サーバーのDBにしかレコードがない、またはDBのレコードのほうが更新日時が新しいレコードを返す：${outputBulkData.length}件\n`, outputBulkData);
+        res.json({ status: 'OK', data: outputBulkData });
       }
     });
-  }).then(() => { // DBのレコードをJSONで返す
-    console.log(`同期用のレコードを返却します：${responseBulkData.length}件\n`, responseBulkData);
-    res.json({ status: 'OK', data: responseBulkData });
 
   }).catch(error => {
     console.error(error);
-    res.json({ status: 'NG', message: 'サーバーのDBの同期処理中にエラーが発生しました' });
+    res.json({ status: 'NG', message: 'サーバーのDBのレコード読み込み時ににエラーが発生しました' });
   });
 }
 

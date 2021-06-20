@@ -1,20 +1,9 @@
 console.log('index.js loaded.');
 
-import { storage } from './storage.js';
 import { idb } from './idb.js';
 import { makeDateIntList, toDateInt, splitDateInt, activateButtonForiOs } from './util.js';
 import { getLevel } from './big6.js';
-
-if (DB_NAME) {
-  storage.setItem('DB_NAME', DB_NAME);
-  storage.save();
-  idb.init(DB_NAME);
-}
-
-if (USER_NAME) {
-  storage.setItem('USER_NAME', USER_NAME);
-  storage.save();
-}
+import { fetcher } from './fetch.js';
 
 activateButtonForiOs();
 
@@ -290,7 +279,7 @@ async function drawAllScore () {
       continue;
     }
     console.log(`step ${step}のグラフを描画します`);
-    console.log('drawScore', stepScores[step]);
+    console.log('→drawScore', stepScores[step]);
     drawScore(outerHexagon, stepScores[step], `score${step}`);
   }
 
@@ -415,3 +404,16 @@ const minTdWidth = 16;
 const maxTableWidth = Math.min(500, document.body.clientWidth);
 
 createDailyTable(maxTableWidth, thWidth, minTdWidth);
+
+// twitterにサインイン済みのときのみ、twitterアイコンをアクティブにする
+fetcher.isAuthenticated().then(response => {
+  console.log(response);
+  switch(response.status) {
+    case 'OK':
+      const twitterIcon = document.getElementById('twitter-icon');
+      twitterIcon.classList.add('active');
+      break;
+    case 'NG':
+      console.log(response.message);
+  }
+});

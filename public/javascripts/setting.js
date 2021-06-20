@@ -1,8 +1,10 @@
 console.log('setting.js is loaded.');
 
+import { idb } from './idb.js';
 import { storage } from './storage.js';
 import { fetcher } from './fetch.js';
-import { activateButtonForiOs } from './util.js';
+import { makeDateIntList, toDateInt, activateButtonForiOs } from './util.js';
+
 
 activateButtonForiOs();
 
@@ -17,7 +19,6 @@ if (userName) {
 
 // twitterにサインイン済みのときのみ、HTMLを書き換える
 fetcher.isAuthenticated().then(response => {
-  console.log(response);
   switch(response.status) {
     case 'OK':
       //const section = document.querySelector('.data-manage');
@@ -50,4 +51,26 @@ updateCahse.addEventListener('click', () => {
     body.removeChild(div);
     swctrl.postMessage({ 'command': 'getCache' });
   }, 1000);
+});
+
+const syncButton = document.getElementById('sync');
+syncButton.addEventListener('click', () => {
+  console.log('同期ボタンが押されました');
+  const todayInt = toDateInt(new Date());
+  const dateIntList = makeDateIntList(todayInt, 10);
+
+  idb.bulkGet('pushup', dateIntList, true).then(records => {
+    const bulkData = {}; // dateInt: data の辞書
+    for (let i = 0; i < dateIntList.length; i++) {
+      const dateInt = dateIntList[i];
+      if (records[i]) {
+        bulkData[dateInt] = records[i];
+      } else {
+        bulkData[dateInt] = null;
+      }
+    }
+    fetcher.sync('pushup', bulkData).then(response => {
+      console.log(response);
+    });
+  });
 });

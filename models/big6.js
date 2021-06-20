@@ -2,6 +2,7 @@
 
 const loader = require('./sequelize-loader');
 const Sequelize = loader.Sequelize;
+const Op = Sequelize.Op;
 
 const fields = {
   Id: {
@@ -81,4 +82,5 @@ module.exports = {
   LegRaise,
   Bridge,
   Handstand,
+  Op,
 };

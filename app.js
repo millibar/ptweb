@@ -20,15 +20,37 @@ var LegRaise = require('./models/big6').LegRaise;
 var Bridge = require('./models/big6').Bridge;
 var Handstand = require('./models/big6').Handstand;
 
+User.sync().then(() =>{ 
+  console.log('Userテーブルsync完了');
+  return Pushup.sync();
+}).then(() =>{ 
+  console.log('Pushupテーブルsync完了');
+  return Squat.sync();
+}).then(() =>{ 
+  console.log('Squatテーブルsync完了');
+  return Pullup.sync();
+}).then(() =>{ 
+  console.log('Pullupテーブルsync完了');
+  return LegRaise.sync();
+}).then(() =>{ 
+  console.log('LegRaiseテーブルsync完了');
+  return Bridge.sync();
+}).then(() =>{ 
+  console.log('Bridgeテーブルsync完了');
+  return Handstand.sync();
+}).then(() => {
+  console.log('Handstandテーブルsync完了');
+})
 
-
+/*
 User.sync().then(() => {
   const Tables = [Pushup, Squat, Pullup, LegRaise, Bridge, Handstand];
   for (let Table of Tables) {
-    // Table.belongsTo(User, { foreignKey: 'userId' });
+    Table.belongsTo(User, { foreignKey: 'userId' });
     Table.sync();
   }
 });
+*/
 
 // Twitter認証用
 var TwitterStrategy = require('passport-twitter').Strategy;
@@ -73,6 +95,7 @@ var indexRouter = require('./routes/index');
 var big6Router = require('./routes/big6');
 var logoutRouter = require('./routes/logout');
 var settingRouter = require('./routes/setting');
+var authRouter = require('./routes/auth');
 
 
 var app = express();
@@ -97,13 +120,14 @@ app.use('/', indexRouter);
 app.use('/big6', big6Router);
 app.use('/logout', logoutRouter);
 app.use('/setting', settingRouter);
+app.use('/auth', authRouter);
 
 
 
 app.get('/auth/twitter', passport.authenticate('twitter'));
 
 app.get('/auth/twitter/callback',
-  passport.authenticate('twitter', { successRedirect: '/', 
+  passport.authenticate('twitter', { successRedirect: '/auth', 
                                      failureRedirect: '/setting'}));
 
 // catch 404 and forward to error handler

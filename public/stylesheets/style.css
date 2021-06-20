@@ -70,7 +70,7 @@ body {
 #twitter-icon {
   width: 24px;
   height: 24px;
-  fill: #0acafa;
+  fill: #ccc;
   position: absolute;
   top: 11px;
   right: 45px;
@@ -78,10 +78,9 @@ body {
 
 .user-info #twitter-icon {
   position: static;
-  fill: #ccc;
 }
 
-.user-info #twitter-icon.active {
+#twitter-icon.active {
   fill: #0acafa;
 }
 

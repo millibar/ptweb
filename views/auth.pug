@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  if user 
+    script const [DB_NAME, USER_NAME] = ['#{dbName}', '#{user.displayName}'];
+  else 
+    script const [DB_NAME, USER_NAME] = ['', ''];
+
+  
+
+  <script type="module" src="/javascripts/auth.js"></script>
