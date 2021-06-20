@@ -22,9 +22,14 @@ block content
 
   <section class="data-manage">
     <h2>データ管理</h2>
+    <div id="sync-indicator" class="hidden">
+      <dl>
+        <dt></dt>
+        <dd><span id="progress"></span></dd>
+      </dl>
+    </div>
     <ul>
-      <li class="hidden">CSVインポート</li>
-      <li><button id="sync">Web上のデータベースと同期する</button></li>
+      <li><button id="sync" class="button hidden">Web上のデータベースと同期する</button></li>
       <li><button id="update-chache" class="button">オフラインキャッシュを更新する</button></li>
     </ul>
   </section>

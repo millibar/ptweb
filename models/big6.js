@@ -57,7 +57,8 @@ const fields = {
   }
 };
 
-const options = {
+// Objectは参照渡しなので、複数のテーブルで使いまわすとindexesが重複してしまう
+const options1 = {
   freezeTableName: true,
   timestamps: false,
   indexes: [
@@ -67,12 +68,64 @@ const options = {
   ]
 };
 
-const Pushup = loader.database.define('pushup', Object.assign({}, fields), Object.assign({}, options));
-const Squat = loader.database.define('squat', Object.assign({}, fields), Object.assign({}, options));
-const Pullup = loader.database.define('pullup', Object.assign({}, fields), Object.assign({}, options));
-const LegRaise = loader.database.define('leg_raise', Object.assign({}, fields), Object.assign({}, options));
-const Bridge = loader.database.define('bridge', Object.assign({}, fields), Object.assign({}, options));
-const Handstand = loader.database.define('handstand', Object.assign({}, fields), Object.assign({}, options));
+const options2 = {
+  freezeTableName: true,
+  timestamps: false,
+  indexes: [
+    {
+      fields: ['userId', 'dateInt']
+    }
+  ]
+};
+
+const options3 = {
+  freezeTableName: true,
+  timestamps: false,
+  indexes: [
+    {
+      fields: ['userId', 'dateInt']
+    }
+  ]
+};
+
+const options4 = {
+  freezeTableName: true,
+  timestamps: false,
+  indexes: [
+    {
+      fields: ['userId', 'dateInt']
+    }
+  ]
+};
+
+const options5 = {
+  freezeTableName: true,
+  timestamps: false,
+  indexes: [
+    {
+      fields: ['userId', 'dateInt']
+    }
+  ]
+};
+
+const options6 = {
+  freezeTableName: true,
+  timestamps: false,
+  indexes: [
+    {
+      fields: ['userId', 'dateInt']
+    }
+  ]
+};
+
+
+
+const Pushup    = loader.database.define('pushup',    fields, options1);
+const Squat     = loader.database.define('squat',     fields, options2);
+const Pullup    = loader.database.define('pullup',    fields, options3);
+const LegRaise  = loader.database.define('leg_raise', fields, options4);
+const Bridge    = loader.database.define('bridge',    fields, options5);
+const Handstand = loader.database.define('handstand', fields, options6);
 
 
 module.exports = {

@@ -17,27 +17,12 @@ if (userName) {
   a.textContent = 'サインインする';
 }
 
-// twitterにサインイン済みのときのみ、HTMLを書き換える
-fetcher.isAuthenticated().then(response => {
-  switch(response.status) {
-    case 'OK':
-      //const section = document.querySelector('.data-manage');
-      //section.classList.remove('hidden');
 
-      const twitterIcon = document.getElementById('twitter-icon');
-      twitterIcon.classList.add('active');
-
-      a.textContent = 'サインアウトする';
-      a.setAttribute('href', 'logout');
-
-      break;
-    case 'NG':
-      console.log(response.message);
-  }
-});
 
 const updateCahse = document.getElementById('update-chache');
 updateCahse.addEventListener('click', () => {
+  updateCahse.disabled = true;
+
   const swctrl = navigator.serviceWorker.controller;
   swctrl.postMessage({ 'command': 'clearCacheAll' });
   
@@ -55,8 +40,71 @@ updateCahse.addEventListener('click', () => {
 
 const syncButton = document.getElementById('sync');
 syncButton.addEventListener('click', () => {
-  console.log('同期ボタンが押されました');
-  sync('pushup', 10)
-  
-  
+  syncButton.disabled = true;
+
+  const days = 30;
+  const div = document.getElementById('sync-indicator')
+  const span = document.getElementById('progress');
+  const dt = document.querySelector('#sync-indicator dt');
+
+  div.classList.remove('hidden');
+  div.classList.add('apear');
+
+  dt.textContent = 'PUSHUPを同期中...';
+
+  sync('pushup', days).then(() => {// PUSHUP完了
+    span.classList.add('pushup');
+    dt.textContent = 'SQUATを同期中...';
+    return sync('squat', days);
+  }).then(() => { // SQUAT完了
+    span.classList.remove('pushup');
+    span.classList.add('squat');
+    dt.textContent = 'PULLUPを同期中...';
+    return sync('pullup', days);
+  }).then(() => { // PULLUP完了
+    span.classList.remove('squat');
+    span.classList.add('pullup');
+    dt.textContent = 'LEG RAISEを同期中...';
+    return sync('leg_raise', days);
+  }).then(() => { // LEG RAISE完了
+    span.classList.remove('pullup');
+    span.classList.add('leg_raise');
+    dt.textContent = 'BRIDGEを同期中...';
+    return sync('bridge', days);
+  }).then(() => { // BRIDGE完了
+    span.classList.remove('leg_raise');
+    span.classList.add('bridge');
+    dt.textContent = 'HANDSTANDを同期中...';
+    return sync('handstand', days);
+  }).then(() => { // HANDSTAND完了
+    span.classList.remove('bridge');
+    span.classList.add('handstand');
+    dt.textContent = '完了';
+    setTimeout(() => {
+      div.classList.remove('apear');
+      div.classList.add('hidden');
+    }, 1000);
+  })
+
+});
+
+// twitterにサインイン済みのときのみ、HTMLを書き換える
+fetcher.isAuthenticated().then(response => {
+  switch(response.status) {
+    case 'OK':
+      //const section = document.querySelector('.data-manage');
+      //section.classList.remove('hidden');
+
+      const twitterIcon = document.getElementById('twitter-icon');
+      twitterIcon.classList.add('active');
+
+      a.textContent = 'サインアウトする';
+      a.setAttribute('href', 'logout');
+
+      syncButton.classList.remove('hidden');
+
+      break;
+    case 'NG':
+      console.log(response.message);
+  }
 });

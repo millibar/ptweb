@@ -6,7 +6,7 @@ import { makeDateIntList, toDateInt } from './util.js';
 
 /**
  * サーバー上のDBにdays日分のトレーニングの記録をPOSTし、サーバーから返ってきた値をIndexed DBに保存する
- * @param {string} big6 
+ * @param {string} big6 （pushup, squat, pullup, leg_raise, bridge, handstand）
  * @param {number} days 今日を起点に何日前まで同期の対象とするか
  * @param {Promise} 成功すれば、最後に追加したdateInt、書き込む必要がなければ0
  */

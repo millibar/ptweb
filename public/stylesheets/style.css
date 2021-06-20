@@ -10,7 +10,7 @@
 .button:active {
   position: relative;
   top: 1px;
-  background-color: rgba(white, 0.05);
+  background-color: rgba(255,255,255, 0.3);
 }
 
 html {
@@ -671,7 +671,7 @@ polygon.score10 {
 .user-info,
 .data-manage {
   margin: 0 10px 2rem;
-  animation-duration: 0.5s;
+  animation-duration: 1s;
   animation-timing-function: ease-out; 
   animation-name: open;
 }
@@ -724,6 +724,10 @@ polygon.score10 {
   display: none;
 }
 
+.data-manage li {
+  margin: 0 0 10px;
+}
+
 .temp-alert {
   position: absolute;
   left: 0;
@@ -743,4 +747,113 @@ polygon.score10 {
   text-align: center;
   box-shadow: 0 2px 5px #ccc;
   z-index: 5;
+}
+
+#sync-indicator {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: 200px;
+  height: 50px;
+  background: #fff;
+  color:#000;
+  opacity: 0.8;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px #ccc;
+  z-index: 5;
+}
+
+#sync-indicator dl {
+  width: 180px;
+  margin: 10px auto;
+  padding: 0;
+}
+
+#sync-indicator dt {
+  font-size: 0.9rem;
+  margin: 0;
+  padding: 0;
+}
+
+#sync-indicator dd {
+  background: #ccc;
+  border-radius: 4px;
+  height: 8px;
+  margin: 0;
+  padding: 0;
+}
+
+#progress {
+  display: block;
+  background: #6d9df5;
+  border-radius: 4px;
+  height: 8px;
+  margin: 0;
+  padding: 0;
+  width: 0;
+  animation-duration: 0.2s;
+  animation-timing-function: linear; 
+}
+
+#progress.pushup {
+  animation-name: progress30;
+  width: 30px;
+}
+
+#progress.squat {
+  animation-name: progress60;
+  width: 60px;
+}
+
+#progress.pullup {
+  animation-name: progress90;
+  width: 90px;
+}
+
+#progress.leg_raise {
+  animation-name: progress120;
+  width: 120px;
+}
+
+#progress.bridge {
+  animation-name: progress150;
+  width: 150px;
+}
+
+#progress.handstand {
+  animation-name: progress180;
+  width: 180px;
+}
+
+@keyframes progress30 {
+  from { width: 0;}
+  to   { width: 30px;}
+}
+
+@keyframes progress60 {
+  from { width: 30px;}
+  to   { width: 60px;}
+}
+
+@keyframes progress90 {
+  from { width: 60px;}
+  to   { width: 90px;}
+}
+
+@keyframes progress120 {
+  from { width: 90px;}
+  to   { width: 120px;}
+}
+
+@keyframes progress150 {
+  from { width: 120px;}
+  to   { width: 150px;}
+}
+
+@keyframes progress180 {
+  from { width: 150px;}
+  to   { width: 180px;}
 }

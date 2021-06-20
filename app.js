@@ -20,37 +20,41 @@ var LegRaise = require('./models/big6').LegRaise;
 var Bridge = require('./models/big6').Bridge;
 var Handstand = require('./models/big6').Handstand;
 
+
 User.sync().then(() =>{ 
-  console.log('Userテーブルsync完了');
+  console.log('Userテーブルsync完了\n');
   return Pushup.sync();
 }).then(() =>{ 
-  console.log('Pushupテーブルsync完了');
+  console.log('Pushupテーブルsync完了\n');
   return Squat.sync();
 }).then(() =>{ 
-  console.log('Squatテーブルsync完了');
+  console.log('Squatテーブルsync完了\n');
   return Pullup.sync();
 }).then(() =>{ 
-  console.log('Pullupテーブルsync完了');
+  console.log('Pullupテーブルsync完了\n');
   return LegRaise.sync();
 }).then(() =>{ 
-  console.log('LegRaiseテーブルsync完了');
+  console.log('LegRaiseテーブルsync完了\n');
   return Bridge.sync();
 }).then(() =>{ 
-  console.log('Bridgeテーブルsync完了');
+  console.log('Bridgeテーブルsync完了\n');
   return Handstand.sync();
 }).then(() => {
-  console.log('Handstandテーブルsync完了');
+  console.log('Handstandテーブルsync完了\n');
 })
+
+
 
 /*
 User.sync().then(() => {
-  const Tables = [Pushup, Squat, Pullup, LegRaise, Bridge, Handstand];
+  const Tables = [Pushup, Squat, Pullup, LegRaise, Bridge, Handstand]
   for (let Table of Tables) {
     Table.belongsTo(User, { foreignKey: 'userId' });
     Table.sync();
   }
 });
 */
+
 
 // Twitter認証用
 var TwitterStrategy = require('passport-twitter').Strategy;
