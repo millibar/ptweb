@@ -179,7 +179,7 @@ function sync(Table, bulkData, filter, res) {
           const recordDateTime = Number.parseInt(record.updatedAt); // bigIntのままだと比較できないみたいなので変換する
 
           if (!posted || postedDateTime < recordDateTime) {
-            console.log('サーバーのDBにしかレコードがない、またはDBのレコードのほうが更新日時が新しい\n', record);
+            console.log(`サーバーのDBにしかレコードがない、またはDBのレコードのほうが更新日時が新しい：${record.dateInt}\n`, record);
             // 返却用のレコードリストへ追加する
             const responseData = {
               dateInt: record.dateInt,
@@ -195,13 +195,13 @@ function sync(Table, bulkData, filter, res) {
             }
             responseBulkData.push(responseData)
           } else if (posted && postedDateTime > recordDateTime) {
-            console.log(`サーバーのDBのレコードのほうが更新日時が古い：POST ${postedDateTime}, DB ${recordDateTime}`);
+            console.log(`サーバーのDBのレコードのほうが更新日時が古い：${record.dateInt} updatedAt POST ${postedDateTime}, DB ${recordDateTime}`);
             // 更新用のレコードリストへ追加する
             const updatingData = convert(userId, posted);
             updatingBulkData.push(updatingData);
 
           } else {
-            console.log(`サーバーのDBのレコードとPOSTされたレコードは更新日時が同じ：${postedDateTime}`);
+            console.log(`サーバーのDBのレコードとPOSTされたレコードは更新日時が同じ：${record.dateInt} updatedAt ${postedDateTime}`);
             // 何もしない
           }
         }
@@ -240,7 +240,7 @@ function sync(Table, bulkData, filter, res) {
     return new Promise((resolve, reject) => {
       if (creatingBulkData.length) {
         Table.bulkCreate(creatingBulkData).then(() => {
-          console.log(`レコードを新規作成しました:${creatingBulkData.length}件\n`, creatingBulkData);
+          console.log(`レコードを新規作成しました：${creatingBulkData.length}件\n`, creatingBulkData);
           resolve();
         }).catch(error => {
           console.error('レコードの新規作成時にエラーが発生しました', error);

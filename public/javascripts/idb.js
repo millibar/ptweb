@@ -76,6 +76,38 @@ class Idb {
   }
 
   /**
+   * Dexieを使ってIndexedDBに複数のデータを一括で書き込む（主キーが同じなら上書き）
+   * @param {string} store オブジェクトストアの名前（pushup, squat, pullup, leg_raise, bridge, handstand）
+   * @param {Array.<Object>} bulkData 書き込むデータの配列
+   * @returns {Promise} 成功すれば最後に追加した主キー（dateInt）が返る
+   */
+  bulkPut(store, bulkData) {
+    return new Promise(resolve => {
+      switch (store) {
+        case 'pushup':
+          resolve(this.db.pushup.bulkPut(bulkData).catch(handleError));
+          break;
+        case 'squat':
+          resolve(this.db.squat.bulkPut(bulkData).catch(handleError));
+          break;
+        case 'pullup':
+          resolve(this.db.pullup.bulkPut(bulkData).catch(handleError));
+          break;
+        case 'leg_raise':
+          resolve(this.db.leg_raise.bulkPut(bulkData).catch(handleError));
+          break;
+        case 'bridge':
+          resolve(this.db.bridge.bulkPut(bulkData).catch(handleError));
+          break;
+        case 'handstand':
+          resolve(this.db.handstand.bulkPut(bulkData).catch(handleError));
+          break;
+      }
+      console.log(`IndexedDB(${this.dbName}_${store})に一括書き込み：${bulkData.length}件`);
+    });
+  }
+
+  /**
  * Dexieを使ってIndexedDBからデータを読み出す
  * @param {string} store オブジェクトストアの名前（pushup, squat, pullup, leg_raise, bridge, handstand）
  * @param {number} dateInt データの主キー
