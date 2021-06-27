@@ -38,7 +38,8 @@ function sync(big6, days) {
     };
   })
   .catch(error => {
-    console.log(error);
+    console.error(error);
+    throw new Error(error);
   });
 }
 

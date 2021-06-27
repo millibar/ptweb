@@ -31,7 +31,9 @@ class Fetcher {
         case 'NG':
           console.log(response.message);
       }
-    });
+    }).catch(error => {
+      console.error(error);
+    })
   }
   
   /**
@@ -62,6 +64,9 @@ class Fetcher {
           case 'NG':
             reject(response.message);
         }
+      }).catch(error => {
+        console.error(error);
+        reject(error);
       });
     });
   }

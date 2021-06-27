@@ -84,6 +84,13 @@ syncButton.addEventListener('click', () => {
       div.classList.remove('apear');
       div.classList.add('hidden');
     }, 1000);
+  }).catch(error => {
+    console.error(error);
+    dt.textContent = 'エラーが発生しました';
+    setTimeout(() => {
+      div.classList.remove('apear');
+      div.classList.add('hidden');
+    }, 1500);
   })
 
 });
