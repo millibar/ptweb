@@ -139,6 +139,15 @@ function drawScore(polygon, scores, className) {
   const svg = polygon.parentNode;
   const viewBox = getVeiwBoxParams(svg);
 
+  // 点数を円の半径としたとき、半径が外接円の面積に比例するように変換する
+  const normScores = scores.map(score => {
+    for (let i = 1; i <= 10; i++) {
+      if (score <= i) {
+        return score * Math.sqrt(i * 10)/i;
+      }
+    }
+  });
+
   // 中心の座標
   const x0 = viewBox.width / 2;
   const y0 = viewBox.height / 2;
@@ -150,11 +159,13 @@ function drawScore(polygon, scores, className) {
   const scorePoints = [];
 
   for (let i = 0; i < points.length; i++) {
-    const r = scores[i] / 10;
+    const r = normScores[i] / 10;
     const xi = (points[i][0] - x0) * r + x0;
     const yi = (points[i][1] - y0) * r + y0;
     scorePoints.push(`${xi}, ${yi}`);
   }
+  
+  
 
   const score = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
   score.setAttribute('points', scorePoints.join(' '));
@@ -181,7 +192,8 @@ setLabel(outerHexagon, labelList);
 
 // レーダーチャートの内枠を描く
 for (let i = 1; i < 5; i++) {
-  const innerHexagon = createPolygon(svg, 6, r * i/5, 'inner');
+  const r2 = r * Math.sqrt(20 * i)/10; // 外接円の面積に比例するように半径を決めた（半径に線形ならr2 = r * i/5）
+  const innerHexagon = createPolygon(svg, 6, r2, 'inner');
   svg.appendChild(innerHexagon);
 }
 
