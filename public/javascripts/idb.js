@@ -305,7 +305,49 @@ class Idb {
     return records;
   }
 
+  /**
+   * Dexieを使ってIndexedDBから対象のBIG6のすべてのrecordの配列を返す
+   * 削除フラグ（deletedAt）のあるレコードは含まない。
+   * @param {string} store オブジェクトストアの名前（pushup, squat, pullup, leg_raise, bridge, handstand）
+   * @returns {Array.<Object>}
+   */
+  async bulkGetAll(store) {
+    let records = [];
+
+    const add = (record) => {
+      if (!record.deletedAt) {
+        records.push(record);
+      }
+    }
+
+    switch (store) {
+      case 'pushup':
+        await this.db.pushup.orderBy('dateInt').each(add).catch(handleError);
+        break;
+      case 'squat':
+        await this.db.squat.orderBy('dateInt').each(add).catch(handleError);
+        break;
+      case 'pullup':
+        await this.db.pullup.orderBy('dateInt').each(add).catch(handleError);
+        break;
+      case 'leg_raise':
+        await this.db.leg_raise.orderBy('dateInt').each(add).catch(handleError);
+        break;
+      case 'bridge':
+        await this.db.bridge.orderBy('dateInt').each(add).catch(handleError);
+        break;
+      case 'handstand':
+        await this.db.handstand.orderBy('dateInt').each(add).catch(handleError);
+        break;
+    }
+  
+    console.log(`IndexedDB(${this.dbName}_${store})のレコードをすべて読み出し：${records.length}件`);
+    return records;
+  }
+
 }
+
+
 
 
 const dbName = storage.getItem('DB_NAME') || 'guest';

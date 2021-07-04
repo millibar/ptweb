@@ -22,6 +22,7 @@ if (userName) {
 const updateCahse = document.getElementById('update-chache');
 updateCahse.addEventListener('click', () => {
   updateCahse.disabled = true;
+  updateCahse.classList.remove('button');
 
   const swctrl = navigator.serviceWorker.controller;
   swctrl.postMessage({ 'command': 'clearCacheAll' });
@@ -41,6 +42,7 @@ updateCahse.addEventListener('click', () => {
 const syncButton = document.getElementById('sync');
 syncButton.addEventListener('click', () => {
   syncButton.disabled = true;
+  syncButton.classList.remove('button');
 
   const days = 30;
   const div = document.getElementById('sync-indicator')

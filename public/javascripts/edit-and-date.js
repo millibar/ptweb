@@ -5,6 +5,7 @@ import { DateItemModel } from './DateModel.js';
 import { DateController } from './DateController.js';
 import { EditController } from './EditController.js'
 import { idb } from './idb.js';
+import { drawGraph } from './barGraph.js';
 
 activateButtonForiOs();
 
@@ -43,6 +44,8 @@ async function createDateList(big6, days) {
 }
 
 createDateList(big6, 10);
+
+drawGraph(big6);
 
 const editController = new EditController(big6);
 editController.init();

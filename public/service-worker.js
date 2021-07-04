@@ -14,7 +14,7 @@ Copyright 2021 Google LLC
  limitations under the License.
  */
 
-const cacheName = 'v202106201640';
+const cacheName = 'v202107031735';
 
 const precacheResources = [
      '/',
@@ -26,6 +26,7 @@ const precacheResources = [
      '/big6/bridge',
      '/big6/handstand',
      '/stylesheets/style.css',
+     '/javascripts/barGraph.js',
      '/javascripts/big6.js',
      '/javascripts/DateController.js',
      '/javascripts/DateModel.js',

@@ -569,9 +569,83 @@ polygon.score10 {
   fill: red;
   opacity: 0.1;
 }
+/* ==================== */
 
 
 /* ==================== */
+/* 棒グラフ */
+#bar-graph {
+  width: 100%;
+  height: 100px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #ddd;
+  overflow: hidden;
+  position: relative;
+}
+
+#bar-graph svg {
+  position:absolute;
+  right: 0;
+}
+
+#bar-graph rect {
+  opacity: 0.7;
+  animation-name: growing;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes growing {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+rect.step1 {
+  fill: #86B81B;
+}
+
+rect.step2 {
+  fill: #009140;
+}
+
+rect.step3 {
+  fill: #00958D;
+}
+
+rect.step4 {
+  fill: #0097DB;
+}
+
+rect.step5 {
+  fill: #0062AC;
+}
+
+rect.step6 {
+  fill: #1B1C80;
+}
+
+rect.step7 {
+  fill: #8A017C;
+}
+
+rect.step8 {
+  fill: #D60077;
+}
+
+rect.step9 {
+  fill: #D7004A;
+}
+
+rect.step10 {
+  fill: #D7000F;
+}
+
 
 
 /* ==================== */
@@ -590,23 +664,31 @@ polygon.score10 {
   line-height: 44px;
   box-sizing: border-box;
   border-bottom: 1px solid #ddd;
-  border-left: 5px solid transparent;
+  /*border-left: 5px solid transparent;*/
   animation-duration: 0.3s;
   animation-timing-function: ease-out; 
   animation-name: open;
 }
 
+#date-list li.has-data::after {
+  content:"\02713";
+  position: absolute;
+  right: 15px;
+  color: lightgreen;
+  font-weight: bold;
+}
+
+/*
 #date-list li.has-data {
   border-left: 5px solid lightblue;
-  /*display: grid;
+  display: grid;
   grid-template-columns: min-content 1fr;
   grid-template-areas:
     "date step"
     "date value";
-  align-items: center;*/
+  align-items: center;
 }
 
-/*
 #date-list li .date {
   grid-area: date;
   

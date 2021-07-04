@@ -866,11 +866,11 @@ const big6Obj = { pushup, squat, pullup, leg_raise, bridge, handstand };
  * dataが、big6のstepにおいて、何レベルのgoalを達成しているか返す
  * 達成していない場合は1を返す
  * @param {string} big6 
- * @param {number} step 
  * @param {Object} data 
  * @returns {number} クリアしたレベル
  */
-const getLevel = (big6, step, data) => {
+const getLevel = (big6, data) => {
+  const step = data['step'];
   const goal = big6Obj[big6][step]['goal'];
   const hasAlt = big6Obj[big6][step]['alt'];
 
@@ -903,44 +903,108 @@ const getLevel = (big6, step, data) => {
   return 1;
 }
 
-export { big6Obj, getLevel };
+/**
+ * dataの、big6のそのstepにおける達成割合。REPS数合計/(level3の目標REPS x SET数).
+ * @param {string} big6 
+ * @param {Object} data
+ * @returns {number} 小数点第2位までの数値。ただし、1は超えない。
+ */
+const ratioOfStep = (big6, data) => {
+  const step = data['step'];
+  const goal = big6Obj[big6][step]['goal'];
+  const hasAlt = big6Obj[big6][step]['alt'];
+ 
+  const alt = hasAlt ? 2 : 1;
+
+  const set1Reps = data.set1 || 0;
+  const set1AltReps = data.set1Alt || 0;
+  const set2Reps = data.set2 || 0;
+  const set2AltReps = data.set2Alt || 0;
+  const set3Reps = data.set3 || 0;
+  const set3AltReps = data.set3Alt || 0;
+  const totalReps = set1Reps + set1AltReps + set2Reps + set2AltReps + set3Reps + set3AltReps;
+
+  const level3GoalTotalReps = goal.level3.REPS * goal.level3.SET * alt;
+
+  return Math.min(1, Math.round(totalReps / level3GoalTotalReps * 100) / 100);
+}
+
+export { big6Obj, getLevel, ratioOfStep };
 
 /*
 function test_getLevel() {
+  const startTime = performance.now();
+
   const testCases = {
-    1: { big6: 'pushup', step: 1, data: { set1: 10, set2: 10, set3: 10 }, expected: 1 },
-    2: { big6: 'pushup', step: 1, data: { set1: 25, set2: 25, set3: 25 }, expected: 2 },
-    3: { big6: 'pushup', step: 1, data: { set1: 50, set2: 50, set3: 50 }, expected: 3 },
-    4: { big6: 'pushup', step: 1, data: { set1: 30, set2: 30, set3: 10 }, expected: 2 },
-    5: { big6: 'pushup', step: 1, data: { set1: 60, set2: 50, set3: 40 }, expected: 2 },
-    6: { big6: 'pushup', step: 1, data: { set1: 9 }, expected: 1 },
-    7: { big6: 'pushup', step: 1, data: { set1: 30, set2: 10 }, expected: 1 },
-    8: { big6: 'pushup', step: 6, data: { set1: 10, set2: 10, set3: 10 }, expected: 2 },
-    9: { big6: 'pushup', step: 6, data: { set1: 20, set2: 19, set3: 15 }, expected: 2 },
-   10: { big6: 'pushup', step: 6, data: { set1: 20, set2: 20, set3: 15 }, expected: 3 },
-   11: { big6: 'pushup', step: 7, data: { set1: 20, set2: 20, set3: 20 }, expected: 1 },
-   12: { big6: 'pushup', step: 7, data: { set1: 5, set1Alt: 5, set2: 5, set2Alt: 5, set3: 5, set3Alt: 5 }, expected: 1 },
-   13: { big6: 'pushup', step: 7, data: { set1: 10, set1Alt: 9, set2: 10, set2Alt: 9 }, expected: 1 },
-   14: { big6: 'pushup', step: 7, data: { set1: 10, set1Alt: 10, set2: 10, set2Alt: 10, set3: 5, set3Alt: 5 }, expected: 2 },
-   15: { big6: 'pushup', step: 7, data: { set1: 20, set1Alt: 20, set2: 20, set2Alt: 19 }, expected: 2 },
-   16: { big6: 'pushup', step: 7, data: { set1: 20, set1Alt: 20, set2: 20, set2Alt: 20 }, expected: 3 }
+    1: { big6: 'pushup', data: { step: 1, set1: 10, set2: 10, set3: 10 }, expected: 1 },
+    2: { big6: 'pushup', data: { step: 1, set1: 25, set2: 25, set3: 25 }, expected: 2 },
+    3: { big6: 'pushup', data: { step: 1, set1: 50, set2: 50, set3: 50 }, expected: 3 },
+    4: { big6: 'pushup', data: { step: 1, set1: 30, set2: 30, set3: 10 }, expected: 2 },
+    5: { big6: 'pushup', data: { step: 1, set1: 60, set2: 50, set3: 40 }, expected: 2 },
+    6: { big6: 'pushup', data: { step: 1, set1: 9 }, expected: 1 },
+    7: { big6: 'pushup', data: { step: 1, set1: 30, set2: 10 }, expected: 1 },
+    8: { big6: 'pushup', data: { step: 6, set1: 10, set2: 10, set3: 10 }, expected: 2 },
+    9: { big6: 'pushup', data: { step: 6, set1: 20, set2: 19, set3: 15 }, expected: 2 },
+   10: { big6: 'pushup', data: { step: 6, set1: 20, set2: 20, set3: 15 }, expected: 3 },
+   11: { big6: 'pushup', data: { step: 7, set1: 20, set2: 20, set3: 20 }, expected: 1 },
+   12: { big6: 'pushup', data: { step: 7, set1: 5, set1Alt: 5, set2: 5, set2Alt: 5, set3: 5, set3Alt: 5 }, expected: 1 },
+   13: { big6: 'pushup', data: { step: 7, set1: 10, set1Alt: 9, set2: 10, set2Alt: 9 }, expected: 1 },
+   14: { big6: 'pushup', data: { step: 7, set1: 10, set1Alt: 10, set2: 10, set2Alt: 10, set3: 5, set3Alt: 5 }, expected: 2 },
+   15: { big6: 'pushup', data: { step: 7, set1: 20, set1Alt: 20, set2: 20, set2Alt: 19 }, expected: 2 },
+   16: { big6: 'pushup', data: { step: 7, set1: 20, set1Alt: 20, set2: 20, set2Alt: 20 }, expected: 3 }
   }
 
   for (const key of Object.keys(testCases)) {
     const big6 = testCases[key]['big6'];
-    const step = testCases[key]['step'];
     const data = testCases[key]['data'];
     const expected = testCases[key]['expected'];
-    const actual = getLevel(big6, step, data);
+    const actual = getLevel(big6, data);
     
 
-    console.assert(expected === actual, `【${key}】getClearLevel: actual=${actual}, expected=${expected}`);
+    console.assert(expected === actual, `【${key}】getLevel: actual=${actual}, expected=${expected}`);
   }
+  const endTime = performance.now();
+  console.log(`...実行時間：${endTime - startTime}`);
 }
 
-console.log('test_getLevel()')
-const startTime = performance.now();
+console.log('test_getLevel()');
 test_getLevel();
-const endTime = performance.now();
-console.log(`...実行時間：${endTime - startTime}`);
+
+
+function test_ratioOfStep() {
+  const startTime = performance.now();
+
+  const testCases = {
+    1: { big6: 'pushup', data: { step: 1, set1: 10, set2: 10, set3: 10 }, expected: 0.2 },
+    2: { big6: 'pushup', data: { step: 1, set1: 25, set2: 25, set3: 25 }, expected: 0.5 },
+    3: { big6: 'pushup', data: { step: 1, set1: 50, set2: 50, set3: 50 }, expected: 1 },
+    4: { big6: 'pushup', data: { step: 1, set1: 30, set2: 30, set3: 10 }, expected: 0.47 },
+    5: { big6: 'pushup', data: { step: 1, set1: 60, set2: 60, set3: 60 }, expected: 1 },
+    6: { big6: 'pushup', data: { step: 1, set1: 9 }, expected: 0.06 },
+    7: { big6: 'pushup', data: { step: 1, set1: 30, set2: 10 }, expected: 0.27 },
+    8: { big6: 'pushup', data: { step: 6, set1: 10, set2: 10, set3: 10 }, expected: 0.75 },
+    9: { big6: 'pushup', data: { step: 6, set1: 20, set2: 19, set3: 15 }, expected: 1 },
+   10: { big6: 'pushup', data: { step: 6, set1: 20, set2: 20, set3: 15 }, expected: 1 },
+   11: { big6: 'pushup', data: { step: 7, set1: 20, set2: 20, set3: 20 }, expected: 0.75 },
+   12: { big6: 'pushup', data: { step: 7, set1: 5, set1Alt: 5, set2: 5, set2Alt: 5, set3: 5, set3Alt: 5 }, expected: 0.38 },
+   13: { big6: 'pushup', data: { step: 7, set1: 10, set1Alt: 9, set2: 10, set2Alt: 9 }, expected: 0.48 },
+   14: { big6: 'pushup', data: { step: 7, set1: 10, set1Alt: 10, set2: 10, set2Alt: 10, set3: 5, set3Alt: 5 }, expected: 0.63 },
+   15: { big6: 'pushup', data: { step: 7, set1: 20, set1Alt: 20, set2: 20, set2Alt: 19 }, expected: 0.99 },
+   16: { big6: 'pushup', data: { step: 7, set1: 20, set1Alt: 20, set2: 20, set2Alt: 20 }, expected: 1 }
+  }
+
+  for (const key of Object.keys(testCases)) {
+    const big6 = testCases[key]['big6'];
+    const data = testCases[key]['data'];
+    const expected = testCases[key]['expected'];
+    const actual = ratioOfStep(big6, data);
+    
+    console.assert(expected === actual, `【${key}】ratioOfStep: actual=${actual}, expected=${expected}`);
+  }
+  const endTime = performance.now();
+  console.log(`...実行時間：${endTime - startTime}`);
+}
+
+console.log('test_ratioOfStep()');
+test_ratioOfStep();
 */

@@ -4,6 +4,7 @@ import { EditModel } from './EditModel.js';
 import { EditView } from './EditView.js';
 import { idb } from './idb.js';
 import { fetcher } from './fetch.js';
+import { drawGraph } from './barGraph.js';
 
 
 export class EditController {
@@ -111,6 +112,8 @@ export class EditController {
 
     this.dateItemView.updateElement(store, data);
     this.removeDateItemView();
+
+    drawGraph(store);
   }
 
   /**

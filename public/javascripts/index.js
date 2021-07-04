@@ -12,7 +12,7 @@ activateButtonForiOs();
  * @param {svg} svg svg要素
  * @returns {object} svgのviewBoxの各プロパティを持つオブジェクト
  */
- function getVeiwBoxParams(svg) {
+function getVeiwBoxParams (svg) {
   const values = svg.getAttribute('viewBox').split(' ').map(value => Number(value)); // [0, 0, 100, 100]
   const viewBox = { x: values[0], y:values[1], width: values[2], height: values[3] };
   return viewBox;
@@ -165,8 +165,6 @@ function drawScore(polygon, scores, className) {
     scorePoints.push(`${xi}, ${yi}`);
   }
   
-  
-
   const score = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
   score.setAttribute('points', scorePoints.join(' '));
   score.setAttribute('class', className);
@@ -227,7 +225,7 @@ async function getStepLevel(big6, step) {
   }
   const levels = [];
   for (const data of dataList) {
-    const level = getLevel(big6, step, data);
+    const level = getLevel(big6, data);
     levels.push(level);
   }
   let level3 = 0;
@@ -396,7 +394,7 @@ async function createDailyTable(tableWidth, thWidth, minTdWidth) {
       const data = dataList[col];
       if (data) {
         const step = data.step;
-        const level = getLevel(big6, step, data);
+        const level = getLevel(big6, data);
         td.classList.add('has-data');
         td.classList.add(`level${level}`);
         td.classList.add(`step${step}`);
