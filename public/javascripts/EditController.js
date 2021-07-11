@@ -98,12 +98,14 @@ export class EditController {
       idbWriting.push(idb.softDel(store, dateInt));
     }
     Promise.race(idbWriting).then(async (key) => {
-      if (!key) {
+      if (key) {
+        const record = await idb.get(store, key, true);
+        fetcher.post(store, record);
+      } else {
         console.log('レコードがないため、サーバーへの送信は不要です');
-        return;
       }
-      const record = await idb.get(store, key, true);
-      fetcher.post(store, record);
+
+      drawGraph(store); // 棒グラフの更新はidbWritingが完了してからにする！
     });
 
     this.removeEditModel();
@@ -112,8 +114,6 @@ export class EditController {
 
     this.dateItemView.updateElement(store, data);
     this.removeDateItemView();
-
-    drawGraph(store);
   }
 
   /**

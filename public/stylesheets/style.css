@@ -590,6 +590,21 @@ polygon.score10 {
   right: 0;
 }
 
+#bar-graph p {
+  font-size: 95%;
+  color: #ccc;
+  position: absolute;
+  margin: auto;
+  padding: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1em;
+  transform: translateY(-10px); /* #bar-graphとヘッダーの間のマージンがあるのでテキストが少し下に見えるのを補正 */
+  text-align: center;
+}
+
 #bar-graph rect {
   opacity: 0.7;
   animation-name: growing;

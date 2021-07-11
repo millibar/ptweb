@@ -20,26 +20,42 @@ const drawGraph =  async (big6) => {
 
   const scores = records.map(record => ratioOfStep(big6, record));
 
+  // 記録のない状態で記録を作り、それを削除したとき、「記録がありません」を消す
+  const p = div.querySelector('p');
+  if (p) {
+    div.removeChild(p);
+  }
+
   // 2回目以降に呼ばれたとき、すでにあるrect要素をすべて削除する
   while(svg.firstChild) {
+    console.log('削除→', svg.firstChild )
     svg.removeChild(svg.firstChild);
   }
 
-  for (let i = 0; i < scores.length; i++) {
-    //console.log(`${records[i].dateInt} step: ${records[i].step}, score: ${scores[i]}`);
+  if (scores.length) {
+    for (let i = 0; i < scores.length; i++) {
+      //console.log(`${records[i].dateInt} step: ${records[i].step}, score: ${scores[i]}`);
+  
+      const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      const barHeight = h * scores[i];
+      const x = (barWidth + barGap) * i;
+      const y = h - barHeight;
+  
+      rect.setAttribute('x', x);
+      rect.setAttribute('y', y);
+      rect.setAttribute('width', barWidth);
+      rect.setAttribute('height', barHeight);
+      rect.setAttribute('class', `step${records[i].step}`);
+      svg.appendChild(rect);
+    }
 
-    const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-    const barHeight = h * scores[i];
-    const x = (barWidth + barGap) * i;
-    const y = h - barHeight;
-
-    rect.setAttribute('x', x);
-    rect.setAttribute('y', y);
-    rect.setAttribute('width', barWidth);
-    rect.setAttribute('height', barHeight);
-    rect.setAttribute('class', `step${records[i].step}`);
-    svg.appendChild(rect);
+  } else {
+    const p = document.createElement('p');
+    p.textContent = '記録がありません';
+    div.appendChild(p);
   }
+
+  
 }
 
 export { drawGraph };
