@@ -141,10 +141,10 @@ function drawScore(polygon, scores, className) {
 
   // 点数を円の半径としたとき、半径が外接円の面積に比例するように変換する
   const normScores = scores.map(score => {
-    for (let i = 1; i <= 10; i++) {
-      if (score <= i) {
-        return score * Math.sqrt(i * 10)/i;
-      }
+    if (score == 0) {
+      return 0;
+    } else {
+      return score * Math.sqrt(10/score);
     }
   });
 
