@@ -311,13 +311,15 @@ function totalStepReps(big6, dateIntList) {
     let total = 0;
     for (const record of records) {
       if (record) {
-        total += record.set1 || 0;
-        total += record.set1Alt || 0;
-        total += record.set2 || 0;
-        total += record.set2Alt || 0;
-        total += record.set3 || 0;
-        total += record.set3Alt || 0;
-        total *= record.step;
+        let subtotal = 0;
+        subtotal += record.set1 || 0;
+        subtotal += record.set1Alt || 0;
+        subtotal += record.set2 || 0;
+        subtotal += record.set2Alt || 0;
+        subtotal += record.set3 || 0;
+        subtotal += record.set3Alt || 0;
+        subtotal *= record.step;
+        total += subtotal;
       }
     }
     resolve(total);
