@@ -44,7 +44,7 @@ syncButton.addEventListener('click', () => {
   syncButton.disabled = true;
   syncButton.classList.remove('button');
 
-  const days = 30;
+  const days = 180;
   const div = document.getElementById('sync-indicator')
   const span = document.getElementById('progress');
   const dt = document.querySelector('#sync-indicator dt');
