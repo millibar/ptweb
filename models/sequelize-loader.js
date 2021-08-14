@@ -15,7 +15,7 @@ const sequelize = process.env.DATABASE_URL ?
   new Sequelize(
     process.env.DATABASE_URL,
     {
-      logging: false,
+      logging: true,
       dialectOptions
     }
   )
@@ -24,7 +24,7 @@ const sequelize = process.env.DATABASE_URL ?
   new Sequelize(
     'postgres://postgres:postgres@db/prisoner_training',
     {
-      logging: false
+      logging: true
     }
   );
 
