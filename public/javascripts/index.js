@@ -228,6 +228,7 @@ async function getStepLevel(big6, step) {
     const level = getLevel(big6, data);
     levels.push(level);
   }
+  levels.sort((a, b) => b - a); // 大きい順に並べ替える. level3のカウントを優先するため.
   let level3 = 0;
   let level2 = 0;
   let level1 = 0;

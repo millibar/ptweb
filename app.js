@@ -103,7 +103,12 @@ var authRouter = require('./routes/auth');
 
 
 var app = express();
-app.use(helmet());
+//app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

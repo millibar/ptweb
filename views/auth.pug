@@ -1,11 +1,13 @@
-extends layout
 
-block content
-  if user 
-    script const [DB_NAME, USER_NAME] = ['#{dbName}', '#{user.displayName}'];
-  else 
-    script const [DB_NAME, USER_NAME] = ['', ''];
-
-  
-
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>認証成功</title>
+    <script src="/javascripts/dexie.min.js"></script>
+  </head>
+  <body>
+  <script>const [DB_NAME, USER_NAME] = ['BiAkkFXKfA', 'millibar'];</script>
   <script type="module" src="/javascripts/auth.js"></script>
+  </body>
+</html>

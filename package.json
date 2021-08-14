@@ -7,26 +7,26 @@
     "test": "node_modules/mocha/bin/mocha --timeout 10000"
   },
   "dependencies": {
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.9",
-    "express": "~4.16.0",
-    "express-session": "^1.17.1",
-    "helmet": "1.1.0",
-    "http-errors": "~1.6.2",
-    "morgan": "~1.9.0",
+    "cookie-parser": "^1.4.5",
+    "debug": "^4.3.2",
+    "express": "^4.17.1",
+    "express-session": "^1.17.2",
+    "helmet": "^4.6.0",
+    "http-errors": "^1.8.0",
+    "morgan": "^1.10.0",
     "passport": "^0.4.1",
     "passport-twitter": "^1.0.4",
-    "pg": "^8.5.1",
-    "pg-hstore": "^2.3.3",
-    "pug": "2.0.0-beta11",
-    "sequelize": "^6.3.5"
+    "pg": "^8.7.1",
+    "pg-hstore": "^2.3.4",
+    "pug": "^3.0.2",
+    "sequelize": "^6.6.5"
   },
   "devDependencies": {
-    "mocha": "^8.2.1",
+    "mocha": "^9.0.3",
     "passport-stub": "^1.1.1",
-    "supertest": "^6.0.1"
+    "supertest": "^6.1.5"
   },
   "engines": {
-    "node": "~10"
+    "node": ">=14"
   }
 }
