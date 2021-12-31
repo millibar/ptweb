@@ -78,6 +78,7 @@ body {
 
 .user-info #twitter-icon {
   position: static;
+  margin-right: 6px;
 }
 
 #twitter-icon.active {
@@ -793,22 +794,121 @@ rect.step10 {
   justify-content: space-between;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #eee;
-  padding: 6px 0;
+  padding: 8px 0;
+}
+
+.user-info .hidden {
+  display: none;
+}
+
+/* クラウドのSVG https://icooon-mono.com/16082/ */
+/* DBのSVG https://icooon-mono.com/16024/ */
+#cloud-icon,
+#db-icon {
+  width: 20px;
+  height: 20px;
+  fill: rgb(75, 75, 75);
+  margin-left: 1rem;
+  margin-right: 6px;
+}
+
+#cloud-icon.hidden {
+  display: none;
+}
+
+#records-cloud,
+#records-db {
+  min-width: 1.5rem;
+  text-align: right;
+  display: inline-block;
 }
 
 #user-name {
-  margin: 0 6px;
   flex-grow: 1;
 }
 
-#auth {
+/* Twitterでアカウント連携・サインインする、アカウント連携を解除する、同期、キャッシュ更新ボタン */
+#auth,
+#logout,
+#sync,
+#update-cache {
   text-decoration: none;
   font-size: 90%;
-  display: inline-block;
-  box-shadow: 0 0px 3px #ccc;
-  border-radius: 6px;
-  padding: 0 12px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  box-shadow: 0 0 3px #ccc;
+  margin: 12px 0;
+  padding: 8px 10px;
+}
+
+#auth {
+  color: #fff;
+  background: #0acafa;
+}
+
+#logout {
   color: #0acafa;
+  background: #fff;
+}
+
+#sync,
+#update-cache { /* button Style */
+  color: #0acafa;
+  background: #fff;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#sync:disabled,
+#update-cache:disabled {
+  color: #aaa;
+  background: #eee;
+  box-shadow: 0 0 1px #ccc;
+  cursor: default;
+}
+
+/* https://iconmonstr.com/twitter-1-svg/ */
+#auth svg {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  fill: #fff;
+  background: transparent;
+}
+
+/* https://iconmonstr.com/link-10-svg/ */
+#logout svg {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+  fill: rgb(75, 75, 75);
+}
+
+/* https://iconmonstr.com/synchronization-24-svg/ */
+#sync svg {
+  width: 22px;
+  height: 22px;
+  margin-right: 8px;
+  fill: rgb(100, 100, 100);
+}
+
+/* https://iconmonstr.com/refresh-7-svg/ */
+#update-cache svg {
+  width: 22px;
+  height: 22px;
+  margin-right: 8px;
+  fill: rgb(100, 100, 100);
+}
+
+#auth.hidden,
+#logout.hidden,
+#sync.hidden {
+  display: none;
 }
 
 .user-info p,

@@ -4,25 +4,108 @@ import { storage } from './storage.js';
 import { fetcher } from './fetch.js';
 import { activateButtonForiOs } from './util.js';
 import { sync } from './sync.js';
+import { idb } from './idb.js';
 
 
 activateButtonForiOs();
-
 const userName = storage.getItem('USER_NAME');
-const a = document.getElementById('auth');
+const auth = document.getElementById('auth');
+const logout = document.getElementById('logout');
+const recordsCloud = document.getElementById('records-cloud');
+const recordsDB = document.getElementById('records-db');
+const twitterIcon = document.getElementById('twitter-icon');
 
-if (userName) {
-  const li = document.getElementById('user-name');
-  li.textContent = userName;
-  a.textContent = 'サインインする';
+const big6Names = ['pushup', 'squat', 'pullup', 'leg_raise', 'bridge', 'handstand'];
+
+
+/**
+ * idbのレコード数を取得して画面上のレコード数を更新する
+ */
+function updateRecordCountIdb() {
+  let dbCount = 0;
+  for (const big6 of big6Names) {
+    idb.bulkGetAll(big6).then(records => {
+      dbCount += records.length;
+      recordsDB.textContent = dbCount;
+    }).catch(error => {
+      console.error(`レコード数の取得に失敗：${error}`);
+    });
+  }
+}
+
+/**
+ * Web上のデータベースのレコード数を取得して画面上のレコード数を更新する
+ */
+function updateRecordCountCloud() {
+  let cloudCount = 0;
+  for (const big6 of big6Names) {
+    fetcher.count(big6).then(response => {
+      switch(response.status) {
+        case 'OK':
+          cloudCount += response.data;
+          recordsCloud.textContent = cloudCount;
+  
+          break;
+        case 'NG':
+          console.error(response.message);
+      }
+    });
+  }
 }
 
 
+updateRecordCountIdb();
 
-const updateCahse = document.getElementById('update-chache');
-updateCahse.addEventListener('click', () => {
-  updateCahse.disabled = true;
-  updateCahse.classList.remove('button');
+// Twitterアカウント連携済みの場合
+if (userName) {
+  const li = document.getElementById('user-name');
+  li.textContent = userName;
+  auth.querySelector('span').textContent = 'Twitterでサインインする';
+  logout.classList.remove('hidden');
+  twitterIcon.classList.remove('hidden');
+}
+
+// Twitterにサインイン中の場合
+fetcher.isAuthenticated().then(response => {
+  switch(response.status) {
+    case 'OK':
+      //const section = document.querySelector('.data-manage');
+      //section.classList.remove('hidden');
+
+      // twitterアイコンをアクティブにする
+      twitterIcon.classList.add('active');
+
+      //「Twitterでアカウント連携する」のリンクを非表示にする
+      auth.classList.add('hidden');
+
+      //「Web上のデータベースと同期する」のボタンを表示する
+      syncButton.classList.remove('hidden');
+
+      // クラウドアイコンを表示する
+      const cloudIcon = document.getElementById('cloud-icon');
+      cloudIcon.classList.remove('hidden');
+
+      // Web上のデータベースのレコード数を取得して表示を更新する
+      updateRecordCountCloud();
+
+      break;
+    case 'NG':
+      console.log(response.message);
+  }
+});
+
+// 「アカウント連携を解除する」をクリックしたとき
+logout.addEventListener('click', () => {
+  storage.setItem('DB_NAME', null);
+  storage.setItem('USER_NAME', null);
+  storage.save();
+});
+
+
+const updateCache = document.getElementById('update-cache');
+updateCache.addEventListener('click', () => {
+  updateCache.disabled = true;
+  updateCache.classList.remove('button');
 
   const swctrl = navigator.serviceWorker.controller;
   swctrl.postMessage({ 'command': 'clearCacheAll' });
@@ -81,6 +164,8 @@ syncButton.addEventListener('click', () => {
   }).then(() => { // HANDSTAND完了
     span.classList.remove('bridge');
     span.classList.add('handstand');
+    updateRecordCountCloud();
+    updateRecordCountIdb();
     dt.textContent = '完了';
     setTimeout(() => {
       div.classList.remove('apear');
@@ -97,23 +182,3 @@ syncButton.addEventListener('click', () => {
 
 });
 
-// twitterにサインイン済みのときのみ、HTMLを書き換える
-fetcher.isAuthenticated().then(response => {
-  switch(response.status) {
-    case 'OK':
-      //const section = document.querySelector('.data-manage');
-      //section.classList.remove('hidden');
-
-      const twitterIcon = document.getElementById('twitter-icon');
-      twitterIcon.classList.add('active');
-
-      a.textContent = 'サインアウトする';
-      a.setAttribute('href', 'logout');
-
-      syncButton.classList.remove('hidden');
-
-      break;
-    case 'NG':
-      console.log(response.message);
-  }
-});

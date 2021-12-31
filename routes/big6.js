@@ -111,6 +111,22 @@ function put(Table, data, filter, res) {
   });
 }
 
+/**
+ * 対象のテーブルのレコード数を返す。削除済みフラグのあるレコードは含めない。
+ * @param {Model} Table レコード数を調べるテーブル
+ * @param {Object} filter where句に指定するフィルター条件
+ * @param {*} res レスポンス
+ */
+function count(Table, filter, res) {
+  Table.count({ where: filter }).then(dataCount => {
+    console.log(`${dataCount}件`);
+    res.json({ status: 'OK', data: dataCount });
+  }).catch(error => {
+    console.error(error);
+    res.json({ status: 'NG', message: 'サーバーのDBのレコード数取得時ににエラーが発生しました' });
+  });
+}
+
 const tables = {
   pushup: Pushup,
   squat: Squat,
@@ -129,6 +145,18 @@ for (const key of Object.keys(tables)) {
     const filter = { userId: req.user.id, dateInt: req.body.dateInt };
     
     put(tables[key], data, filter, res);
+  });
+
+  /* トレーニングのレコード数取得用Web API */
+  router.post(`/${key}/count`, authenticationEnsurer, (req, res, next) => {
+    console.log(`${req.user.username}より${key}のレコード数を要求されました`);
+
+    const filter = { 
+      userId: req.user.id,
+      deletedAt: null
+    };
+
+    count(tables[key], filter, res);
   });
 
   /* トレーニング同期用Web API */

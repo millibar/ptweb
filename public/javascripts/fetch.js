@@ -45,6 +45,17 @@ class Fetcher {
       resolve(postData('/auth'));
     });
   }
+  
+  /**
+   * サーバーにデータをPOSTして、BIG6のテーブルのレコード数を取得する
+   * @param {string} big6
+   * @returns {Promise} 解決するとサーバー上のDBからレコード数が返る
+   */
+  count(big6) {
+    return new Promise(resolve => {
+      resolve(postData(`/big6/${big6}/count`));
+    });
+  }
 
   /**
    * サーバーにデータをPOSTして、サーバー上のDBのレコードとupdatedAtを比較し、
