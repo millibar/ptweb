@@ -58,6 +58,16 @@ class Fetcher {
   }
 
   /**
+   * サーバーにデータをPOSTして、オンライン状態かどうか調べる
+   * @returns {Promise} 解決すると{ status: "OK" }というJSONが返る
+   */
+  isOnLine() {
+    return new Promise(resolve => {
+      resolve(postData('/auth/isOnLine'));
+    });
+  }
+
+  /**
    * サーバーにデータをPOSTして、サーバー上のDBのレコードとupdatedAtを比較し、
    * DBのほうが新しい、もしくはDBにしかないレコードがあれば、それらの配列を返す
    * @param {string} big6 

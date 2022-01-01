@@ -2,7 +2,7 @@ console.log('setting.js is loaded.');
 
 import { storage } from './storage.js';
 import { fetcher } from './fetch.js';
-import { activateButtonForiOs } from './util.js';
+import { activateButtonForiOs, isOnLine } from './util.js';
 import { sync } from './sync.js';
 import { idb } from './idb.js';
 
@@ -61,37 +61,47 @@ if (userName) {
   const li = document.getElementById('user-name');
   li.textContent = userName;
   auth.querySelector('span').textContent = 'Twitterでサインインする';
-  logout.classList.remove('hidden');
   twitterIcon.classList.remove('hidden');
 }
 
-// Twitterにサインイン中の場合
-fetcher.isAuthenticated().then(response => {
-  switch(response.status) {
-    case 'OK':
-      //const section = document.querySelector('.data-manage');
-      //section.classList.remove('hidden');
+// オンラインのとき
+isOnLine().then(result => {
+  if (result) {
+    // 「データ管理」セクションを表示する
+    const dataManageArea = document.querySelector('.data-manage');
+    dataManageArea.classList.remove('hidden');
+  
+    // Twitterにサインイン中のとき
+    fetcher.isAuthenticated().then(response => {
+      switch(response.status) {
+        case 'OK':
+          // twitterアイコンをアクティブにする
+          twitterIcon.classList.add('active');
+  
+          //「Web上のデータベースと同期する」のボタンを表示する
+          syncButton.classList.remove('hidden');
+  
+          // クラウドアイコンを表示する
+          const cloudIcon = document.getElementById('cloud-icon');
+          cloudIcon.classList.remove('hidden');
+  
+          // Web上のデータベースのレコード数を取得して表示を更新する
+          updateRecordCountCloud();
+  
+          break;
+        case 'NG':
+          console.log(response.message);
+          //「Twitterでアカウント連携する」のリンクを表示する
+          auth.classList.remove('hidden');
+      }
+    });
 
-      // twitterアイコンをアクティブにする
-      twitterIcon.classList.add('active');
-
-      //「Twitterでアカウント連携する」のリンクを非表示にする
-      auth.classList.add('hidden');
-
-      //「Web上のデータベースと同期する」のボタンを表示する
-      syncButton.classList.remove('hidden');
-
-      // クラウドアイコンを表示する
-      const cloudIcon = document.getElementById('cloud-icon');
-      cloudIcon.classList.remove('hidden');
-
-      // Web上のデータベースのレコード数を取得して表示を更新する
-      updateRecordCountCloud();
-
-      break;
-    case 'NG':
-      console.log(response.message);
+    if (userName) {
+      logout.classList.remove('hidden');
+    }
   }
+}).catch(error => {
+  console.error(error);
 });
 
 // 「アカウント連携を解除する」をクリックしたとき

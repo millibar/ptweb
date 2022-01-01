@@ -22,5 +22,11 @@ router.post('/', authenticationEnsurer, (req, res, next) => {
   res.json({ status: 'OK', user: req.user });
 });
 
+/* オンライン状態確認用Web API */
+router.post('/isOnLine', (req, res, next) => {
+  console.log('オンラインです');
+  res.json({ status: 'OK' });
+});
+
 
 module.exports = router;

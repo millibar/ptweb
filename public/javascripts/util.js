@@ -1,19 +1,5 @@
 console.log('util.js is loaded.');
-
-/**
- * URLのクエリ文字列からkeyに対応する値を取得する
- * @param {string} key 
- * @returns {string}
- */
-const getQueryValue = (key) => {
-  const q = location.search.substring(1).split('&'); // ['big6=pushup', 'date=20210508']
-  const obj = {};
-  for (let item of q) {
-    const kv = item.split('='); // ['big6', 'pushup']
-    obj[kv[0]] = kv[1];
-  }
-  return obj[key];
-}
+import { fetcher } from './fetch.js';
 
 /**
  * yyyymmdd形式の数値を['yyyy', 'mm', 'dd']にして返す
@@ -75,15 +61,30 @@ const activateButtonForiOs = () => {
   }
 }
 
+/**
+ * オンラインかどうか調べる
+ * @returns {boolean} オンラインならtrue
+ */
+const isOnLine = async () => {
+  let result = false;
+  if (navigator.onLine) {
+    console.log('navigator.onLine is true.');
 
-
-const big6Title = {
-  pushup   : 'PUSHUP',
-  squat    : 'SQUAT',
-  pullup   : 'PULLUP',
-  leg_raise: 'LEG RAISE',
-  bridge   : 'BRIDGE',
-  handstand: 'HANDSTAND PUSHUP'
+    await fetcher.isOnLine().then(response => {
+      if (response.status === 'OK') {
+        console.log('オンラインです');
+        result = true;
+      } else {
+        console.error('想定外のエラーです');
+      }
+    }).catch(error => {
+      console.error(error);
+    });
+  } else {
+    console.log('navigator.onLine is false.');
+  }
+  return result;
 }
 
-export { getQueryValue, splitDateInt, toDateInt, makeDateIntList, big6Title, activateButtonForiOs };
+
+export { splitDateInt, toDateInt, makeDateIntList, activateButtonForiOs, isOnLine };

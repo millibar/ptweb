@@ -774,6 +774,10 @@ rect.step10 {
   animation-name: open;
 }
 
+.data-manage.hidden {
+  display: none;
+}
+
 .user-info h2,
 .data-manage h2 {
   font-size: 1rem;
