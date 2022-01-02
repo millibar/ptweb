@@ -108,11 +108,10 @@ export class EditController {
 
       drawGraph(store); // 棒グラフの更新はidbWritingが完了してからにする！
 
-      const today = new Date();
-      if (dateInt === toDateInt(today)) {
+      if (this.editModel.hasData() && dateInt === toDateInt(new Date())) {
         this.editView.showTweetButton(this.editModel);
       } else {
-        console.log('当日以外はTweetボタンは出さない');
+        console.log('データがない、または当日でない場合はTweetボタンは出さない');
       }
       this.removeEditModel();
     });

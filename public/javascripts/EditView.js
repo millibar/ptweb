@@ -131,7 +131,7 @@ export class EditView {
       'pullup': 'プルアップ', 
       'leg-raise': 'レッグレイズ',
       'bridge': 'ブリッジ',
-      'handstand': 'ハンドスタンドプッシュアップ'
+      'handstand': 'ハンドスタンド・プッシュアップ'
     };
 
     const big6 = big6Names[editModel.big6Name];
