@@ -5,6 +5,7 @@ import { EditView } from './EditView.js';
 import { idb } from './idb.js';
 import { fetcher } from './fetch.js';
 import { drawGraph } from './barGraph.js';
+import { toDateInt } from './util.js';
 
 
 export class EditController {
@@ -106,9 +107,16 @@ export class EditController {
       }
 
       drawGraph(store); // 棒グラフの更新はidbWritingが完了してからにする！
+
+      const today = new Date();
+      if (dateInt === toDateInt(today)) {
+        this.editView.showTweetButton(this.editModel);
+      } else {
+        console.log('当日以外はTweetボタンは出さない');
+      }
+      this.removeEditModel();
     });
 
-    this.removeEditModel();
     this.editView.hideEditForm();
     this.editView.clearInputValues();
 

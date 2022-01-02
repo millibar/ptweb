@@ -1,10 +1,27 @@
 console.log('EditView.js is loaded.');
 
-import { splitDateInt } from './util.js';
+import { splitDateInt, isOnLine } from './util.js';
+import { createTweetButton } from './twitterPost.js';
 
 export class EditView {
   constructor() {
     this.form = document.querySelector('form');
+  }
+
+  /**
+   * 下のボタンを押せないように画面上をdiv要素で覆う
+   */
+  overlayOn() {
+    const body = document.querySelector('body');
+    const div = document.createElement('div');
+    div.setAttribute('id', 'overlay');
+    body.appendChild(div);
+  }
+
+  overlayOff() {
+    const body = document.querySelector('body');
+    const div = document.getElementById('overlay');
+    body.removeChild(div);
   }
 
   /**
@@ -18,11 +35,7 @@ export class EditView {
     this.form.classList.add('appear');
     this.form.classList.remove('hidden');
 
-    // オーバーレイ
-    const body = document.querySelector('body');
-    const div = document.createElement('div');
-    div.setAttribute('id', 'overlay');
-    body.appendChild(div);
+    this.overlayOn();
   }
 
   /**
@@ -32,9 +45,7 @@ export class EditView {
     this.form.classList.remove('appear');
     this.form.classList.add('hidden');
 
-    const body = document.querySelector('body');
-    const div = document.getElementById('overlay');
-    body.removeChild(div);
+    this.overlayOff();
   }
 
   /**
@@ -107,5 +118,88 @@ export class EditView {
       const span = document.getElementById(`level${i}`);
       span.textContent = editModel.getLevel(i);
     }
+  }
+
+  /**
+   * Tweetボタンを表示する
+   * @param {EditModel} editModel
+   */
+  showTweetButton(editModel) {
+    const big6Names = {
+      'pushup': 'プッシュアップ',
+      'squat': 'スクワット',
+      'pullup': 'プルアップ', 
+      'leg-raise': 'レッグレイズ',
+      'bridge': 'ブリッジ',
+      'handstand': 'ハンドスタンドプッシュアップ'
+    };
+
+    const big6 = big6Names[editModel.big6Name];
+    const step = editModel.getStep();
+    const title = editModel.big6[step]['title'];
+
+    let prefillText = `${big6}\n`;
+    prefillText += `ステップ${step} ${title}\n`;
+
+    const data = editModel.data;
+    const dataList = [[data.set1, data.set1Alt], [data.set2, data.set2Alt], [data.set3, data.set3Alt]];
+
+    for (let i = 0; i < dataList.length; i++) {
+      if (dataList[i][0] || dataList[i][1]) {
+        prefillText += `\nSET${i + 1}：`;
+        
+        if (dataList[i][0]) {
+          prefillText += `${dataList[i][0]}`;
+          prefillText += editModel.getPlaceholder() ? `（${editModel.getPlaceholder()}）` : '';
+        }
+
+        if (dataList[i][1]) {
+          prefillText += `${dataList[i][1]}`;
+          prefillText += editModel.getPlaceholderAlt() ? `（${editModel.getPlaceholderAlt()}）` : '';
+        }
+      }
+    }
+    prefillText += '\n';
+
+    // editModelの扱いを非同期処理の中で行うと完了前にeditModelが消される可能性があるので、isOnlineの外で済ませておく
+    isOnLine().then(result => {
+      if (result) {
+        this.overlayOn();
+
+        console.log(prefillText);
+        const tweetButtonArea = document.getElementById('tweet-button-area');
+        const container = document.querySelector('.container');
+        
+        createTweetButton(prefillText, container);
+        const span = document.createElement('span');
+        span.textContent = '閉じる';
+        container.appendChild(span);
+
+        span.addEventListener('click', () => {
+          this.discardTweetButton();
+        });
+
+        tweetButtonArea.classList.add('appear');
+      } else {
+        console.log('オフラインなのでTwitterへの投稿はしません');
+      }
+    }).catch(error => {
+      console.error(`Twitterへの投稿に失敗：${error}`);
+    });
+  }
+
+  /**
+   * Tweetボタンのダイアログを削除する
+   */
+  discardTweetButton() {
+    
+    const tweetButtonArea = document.getElementById('tweet-button-area');
+    tweetButtonArea.classList.remove('appear');
+
+    const container = document.querySelector('.container');
+    while (container.firstChild) {
+      container.removeChild(container.firstChild);
+    }
+    this.overlayOff();
   }
 }

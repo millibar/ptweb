@@ -155,7 +155,52 @@ header h1 {
   opacity: 0.5; 
 }
 
+/* ==================== */
+/* Tweetボタン */
+#tweet-button-area {
+  display: none;
+}
 
+#tweet-button-area.appear {
+  display: block;
+  position: fixed; /* 包含ブロックはビューポートになる（bodyではない） */
+  width: 250px;
+  height: 60px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  padding: 10px;
+  text-align: center;
+  background: #fff;
+  box-shadow: 0 3px 6px #aaa;
+  border-radius: 8px;
+  z-index: 10;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-out; 
+  animation-name: open;
+}
+
+#tweet-button-area p {
+  font-size: 90%;
+  margin: 0 0 0.5em;
+}
+
+#tweet-button-area .container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#tweet-button-area a {
+  visibility: hidden;
+}
+
+#tweet-button-area span {
+  cursor: pointer;
+}
 
 /* ==================== */
 /* 記録の入力フォーム */

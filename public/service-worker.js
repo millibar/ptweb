@@ -14,7 +14,7 @@ Copyright 2021 Google LLC
  limitations under the License.
  */
 
-const cacheName = 'v202108141655';
+const cacheName = 'v202201021845';
 
 const precacheResources = [
      '/',
@@ -43,6 +43,7 @@ const precacheResources = [
      '/javascripts/setting.js',
      '/javascripts/storage.js',
      '/javascripts/sync.js',
+     '/javascripts/twitterPost.js',
      '/javascripts/util.js'
 ];
 
