@@ -14,12 +14,10 @@ const createTweetButton = (prefillText, targetElement) => {
   a.setAttribute('data-hashtags', 'プリズナートレーニング');
   a.setAttribute('data-text', prefillText);
   a.setAttribute('data-size', 'large');
-  //a.textContent = 'Tweet';
 
-  const loadingImg = document.createElement('img');
-  loadingImg.setAttribute('src', '../images/spin-gray.svg');
-  loadingImg.setAttribute('alt', '読み込み中');
-  a.appendChild(loadingImg);
+  const span = document.createElement('span');
+  span.classList.add('sp-circle');
+  a.appendChild(span);
 
   targetElement.appendChild(a);
   
