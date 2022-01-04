@@ -8,13 +8,18 @@ console.log('twitterPost.js is loaded.');
 const createTweetButton = (prefillText, targetElement) => {
   const a = document.createElement('a');
   const hrefValue ='https://twitter.com/intent/tweet?ref_src=twsrc%5Etfw';
-
+  
   a.setAttribute('href', hrefValue);
   a.className = 'twitter-hashtag-button';
   a.setAttribute('data-hashtags', 'プリズナートレーニング');
   a.setAttribute('data-text', prefillText);
   a.setAttribute('data-size', 'large');
-  a.textContent = 'Tweet';
+  //a.textContent = 'Tweet';
+
+  const loadingImg = document.createElement('img');
+  loadingImg.setAttribute('src', '../images/spin-gray.svg');
+  loadingImg.setAttribute('alt', '読み込み中');
+  a.appendChild(loadingImg);
 
   targetElement.appendChild(a);
   

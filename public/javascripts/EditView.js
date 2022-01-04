@@ -139,7 +139,7 @@ export class EditView {
     const title = editModel.big6[step]['title'];
 
     let prefillText = `${big6}\n`;
-    prefillText += `ステップ${step} ${title}\n`;
+    prefillText += `STEP${step} ${title}\n`;
 
     const data = editModel.data;
     const dataList = [[data.set1, data.set1Alt], [data.set2, data.set2Alt], [data.set3, data.set3Alt]];

@@ -195,7 +195,20 @@ header h1 {
 }
 
 #tweet-button-area a {
-  visibility: hidden;
+  width: 80px;
+  display: inline-block;
+  text-align: center;
+}
+
+/* https://www.benricho.org/loading_images/svg01.html */
+#tweet-button-area a img {
+  width: 26px;
+}
+
+#tweet-button-area iframe {
+  animation-duration: 0.5s;
+  animation-timing-function: ease-out; 
+  animation-name: open;
 }
 
 #tweet-button-area span {
