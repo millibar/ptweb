@@ -129,7 +129,7 @@ export class EditView {
       'pushup': 'プッシュアップ',
       'squat': 'スクワット',
       'pullup': 'プルアップ', 
-      'leg-raise': 'レッグレイズ',
+      'leg_raise': 'レッグレイズ',
       'bridge': 'ブリッジ',
       'handstand': 'ハンドスタンド・プッシュアップ'
     };
