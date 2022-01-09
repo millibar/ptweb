@@ -179,6 +179,8 @@ export class EditView {
           this.discardTweetButton();
         });
 
+        document.addEventListener('visibilitychange', this.closeDialoue.bind(this), { once: true });
+
         tweetButtonArea.classList.add('appear');
       } else {
         console.log('オフラインなのでTwitterへの投稿はしません');
@@ -188,11 +190,22 @@ export class EditView {
     });
   }
 
+  closeDialoue() {
+    if (document.hidden) {
+      const container = document.querySelector('.container');
+      const firstChild = container.querySelector('*');
+      if (firstChild) {
+        this.discardTweetButton();
+      } else {
+        console.log('削除する要素はありません');
+      }
+    }
+  }
+
   /**
    * Tweetボタンのダイアログを削除する
    */
   discardTweetButton() {
-    
     const tweetButtonArea = document.getElementById('tweet-button-area');
     tweetButtonArea.classList.remove('appear');
 
