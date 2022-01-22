@@ -3,7 +3,8 @@ console.log('storage.js is loaded.');
 /**
  * { 
  *  DB_NAME: 'guest' or 'twitterのuser.idを10桁の文字列に変換した値',
- *  username: twitterのusername
+ *  USER_NAME: twitterのusername,
+ *  canTweet: 0 or 1,
  *  pushup: PUSHUPで最後に選択したステップ,
  *  squat:
  *  pullup:

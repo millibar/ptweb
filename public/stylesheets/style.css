@@ -873,7 +873,7 @@ rect.step10 {
   list-style: none;
 }
 
-.user-info li {
+.account li {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -881,6 +881,74 @@ rect.step10 {
   border-bottom: 1px solid #eee;
   padding: 8px 0;
 }
+
+.checkbox li {
+  margin: 10px 0 20px;
+  padding: 0;
+  position: relative;
+}
+
+.checkbox li label {
+  position: absolute;
+  top:0;
+  left:0;
+  right:0;
+  width: auto;
+}
+
+.checkbox input[type="checkbox"] {
+  visibility: hidden;
+}
+
+.checkbox input[type="checkbox"] + label::before {
+  content: "";
+  display: block;
+  width: 2.8rem;
+  height: 1.7rem;
+  background: #fff;
+  border-radius: 0.8rem;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: auto;
+  right: 0;
+  margin: auto;
+  z-index: 1;
+  box-shadow: 1px 1px 1px 0 #bbb inset;
+  transition-property: background-color;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+}
+
+.checkbox input[type="checkbox"] + label::after {
+  content: "";
+  display: block;
+  width: 1.5rem;
+  height: 1.5rem;
+  background: #fff;
+  border-radius: 50%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: auto;
+  right: 0;
+  margin: auto;
+  z-index: 10;
+  box-shadow: 1px 1px 1px 1px #bbb;
+  transition-property: transform;
+  transition-duration: 0.2s;
+  transition-timing-function: ease-in-out;
+  transform: translateX(-1.3rem); /* 2.8 - 1.5 */
+}
+
+.checkbox input[type="checkbox"]:checked + label::before {
+  background: #62ea70;
+}
+
+.checkbox input[type="checkbox"]:checked + label::after {
+  transform: translateX(0);
+}
+
 
 .user-info .hidden {
   display: none;

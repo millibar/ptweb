@@ -14,9 +14,21 @@ const logout = document.getElementById('logout');
 const recordsCloud = document.getElementById('records-cloud');
 const recordsDB = document.getElementById('records-db');
 const twitterIcon = document.getElementById('twitter-icon');
+const checkboxForTweet = document.getElementById('can-tweet');
 
 const big6Names = ['pushup', 'squat', 'pullup', 'leg_raise', 'bridge', 'handstand'];
 
+/**
+ * トレーニング後にTweetするのチェック状態を更新する
+ */
+function setTweetToggle() {
+  const canTweet = storage.getItem('canTweet');
+  if (canTweet) {
+    checkboxForTweet.checked = true;
+  } else {
+    checkboxForTweet.checked = false;
+  }
+}
 
 /**
  * idbのレコード数を取得して画面上のレコード数を更新する
@@ -53,7 +65,7 @@ function updateRecordCountCloud() {
   }
 }
 
-
+setTweetToggle();
 updateRecordCountIdb();
 
 // Twitterアカウント連携済みの場合
@@ -62,6 +74,9 @@ if (userName) {
   li.textContent = userName;
   auth.querySelector('span').textContent = 'Twitterでサインインする';
   twitterIcon.classList.remove('hidden');
+
+  const ul = document.querySelector('ul.checkbox');
+  ul.classList.remove('hidden');
 }
 
 // オンラインのとき
@@ -108,6 +123,17 @@ isOnLine().then(result => {
 logout.addEventListener('click', () => {
   storage.setItem('DB_NAME', null);
   storage.setItem('USER_NAME', null);
+  storage.save();
+});
+
+
+// トレーニング後にTweetするを切り替えたとき
+checkboxForTweet.addEventListener('change', () => {
+  if (checkboxForTweet.checked) {
+    storage.setItem('canTweet', 1);
+  } else {
+    storage.setItem('canTweet', 0);
+  };
   storage.save();
 });
 

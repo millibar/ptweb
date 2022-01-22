@@ -6,6 +6,7 @@ import { idb } from './idb.js';
 import { fetcher } from './fetch.js';
 import { drawGraph } from './barGraph.js';
 import { toDateInt } from './util.js';
+import { storage } from './storage.js';
 
 
 export class EditController {
@@ -108,7 +109,9 @@ export class EditController {
 
       drawGraph(store); // 棒グラフの更新はidbWritingが完了してからにする！
 
-      if (this.editModel.hasData() && dateInt === toDateInt(new Date())) {
+      if (this.editModel.hasData() &&
+       dateInt === toDateInt(new Date()) &&
+       storage.getItem('canTweet')) {
         this.editView.showTweetButton(this.editModel);
       } else {
         console.log('データがない、または当日でない場合はTweetボタンは出さない');
