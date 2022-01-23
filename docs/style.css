@@ -1,0 +1,99 @@
+html {
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+}
+
+body {
+  margin: 0;
+  padding: 0 8px 8px;
+}
+
+/*
+body > * {
+  outline: 1px solid red;
+}*/
+
+h1 {
+  font-size: 150%;
+  margin: 0 -8px 1rem;
+  padding: 8px;
+  background: #de5656;
+  color: #fff;
+}
+
+h2 {
+  font-size: 125%;
+  margin: 0 0 0.5rem;
+}
+
+h3 {
+  font-size: 125%;
+  font-weight: normal;
+  color: rgb(153, 45, 45);
+  margin: 0 0 0.5rem;
+}
+
+p + h3 {
+  margin-top: 2rem;
+}
+
+h4 {
+  font-size: 100%;
+  font-weight: bold;
+  color: #333;
+  margin: 0 0 0.5rem;
+}
+
+p, li {
+  font-size: 94%;
+  margin: 0 0 1rem;
+}
+
+p.note {
+  font-size: 80%;
+  color: #666;
+}
+
+.amazon {
+  float: left;
+  margin: 0 10px 0 0;
+}
+
+.amazon img {
+  float: left;
+  display: inline;
+  margin: 0;
+}
+
+img {
+  max-width: 90%;
+  display: block;
+  margin: 0 auto 1rem;
+  /*box-shadow: 0 1px 3px #ccc;*/
+}
+
+ol img {
+  max-width: 75%;
+  display: block;
+  margin: auto;
+}
+
+ul, ol {
+  margin: 0;
+  padding: 0 0 0 1.5rem;
+}
+
+#start {
+  display: block;
+  padding: 10px 16px;
+  border-radius: 16px;
+  box-shadow: 0 0 6px #ccc;
+  margin: 1.5rem auto;
+  width: 8rem;
+  background: #de5656;
+  color: #fff;
+  text-decoration: none;
+  text-align: center;
+
+}
