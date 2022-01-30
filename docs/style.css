@@ -5,14 +5,38 @@ html {
 }
 
 body {
-  margin: 0;
+  margin: 0 auto;
   padding: 0 8px 8px;
+  font-family: "Helvetica Neue",
+  Arial,
+  "Hiragino Kaku Gothic ProN",
+  "Hiragino Sans",
+  Meiryo,
+  sans-serif;/* https://ics.media/entry/200317/ */
+  max-width: 900px;
 }
 
 /*
 body > * {
   outline: 1px solid red;
 }*/
+
+@media screen and (min-width: 640px) {
+  body > img {
+    float: left;
+    width: 40%;
+    margin-right: 16px;
+      
+  }
+
+  li > img {
+    width: 400px;
+  }
+
+  h3 {
+    clear: both;
+  }
+}
 
 h1 {
   font-size: 150%;
@@ -57,7 +81,7 @@ p.note {
 
 .amazon {
   float: left;
-  margin: 0 10px 0 0;
+  margin: 0 10px 10px 0;
 }
 
 .amazon img {
@@ -84,7 +108,7 @@ ul, ol {
   padding: 0 0 0 1.5rem;
 }
 
-#start {
+.start {
   display: block;
   padding: 10px 16px;
   border-radius: 16px;
