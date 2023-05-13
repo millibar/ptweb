@@ -13,11 +13,7 @@ const dialectOptions = {
 const sequelize = process.env.DATABASE_URL ?
   // 本番環境
   new Sequelize(
-    process.env.DATABASE_URL,
-    {
-      logging: true,
-      dialectOptions
-    }
+    process.env.DATABASE_URL
   )
   :
   // 開発環境
