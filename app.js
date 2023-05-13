@@ -61,7 +61,7 @@ var TwitterStrategy = require('passport-twitter').Strategy;
 
 var TWITTER_CONSUMER_KEY = process.env.TWITTER_CONSUMER_KEY || require('./secret').KEY; // ローカルで動かすにはsecret.jsというファイルが必要
 var TWITTER_CONSUMER_SECRET = process.env.TWITTER_CONSUMER_SECRET || require('./secret').CONSUMER_SECRET;
-var CALLBACK_URL = process.env.APP_URL ? process.env.APP_URL + '/auth/twitter/callback' : 'http://localhost:8000/auth/twitter/callback';
+var CALLBACK_URL = process.env.APP_URL ? process.env.APP_URL + '/auth/twitter/callback' : 'http://localhost:8080/auth/twitter/callback';
 var SESSION_SECRET = 'hirothecat2021';
 
 // 認証情報をセッションで管理
