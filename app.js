@@ -5,7 +5,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var helmet = require('helmet');
 
-var session = require('express-session');
+//var session = require('express-session');
+var cookieSession = require('cookie-session');
 var passport = require('passport');
 
 
@@ -66,11 +67,17 @@ var SESSION_SECRET = 'hirothecat2021';
 
 // 認証情報をセッションで管理
 passport.serializeUser(function(user, done) {
-  done(null, user);
+  const profile = {
+    id: user.id,
+    username: user.username,
+    displayName: user.displayName,
+  }
+  done(null, JSON.stringify(profile));
 });
 
 passport.deserializeUser(function(obj, done) {
-  done(null, obj);
+  const profile = JSON.parse(obj);
+  done(null, profile);
 });
 
 passport.use(new TwitterStrategy({
@@ -121,7 +128,17 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // セッション用（Twitter認証で使う）
-app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false }));
+//app.use(session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false })); //express-session
+app.use(
+  cookieSession({
+    name: "session",
+    keys: [SESSION_SECRET],
+
+    // Cookie Options
+    maxAge: 24 * 60 * 60 * 1000, // 24 hours
+  })
+);
+
 app.use(passport.initialize());
 app.use(passport.session());
 
