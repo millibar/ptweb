@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const authenticationEnsurer = require('./authentication-ensurer');
 
+const User = require('../models/user');
 
 router.get('/', authenticationEnsurer, (req, res, next) => {
   let DB_NAME = '';
@@ -18,8 +19,20 @@ router.get('/', authenticationEnsurer, (req, res, next) => {
 
 /* ログイン状態確認用Web API */
 router.post('/', authenticationEnsurer, (req, res, next) => {
-  console.log(`${req.user.username}でサインインしています`);
-  res.json({ status: 'OK', user: req.user });
+  const filter = { 
+    userId: req.user.id
+  };
+  User.count({ where: filter }).then(dataCount => {
+    if (dataCount > 0) {
+      console.log(`${req.user.username}でサインインしています`);
+      res.json({ status: 'OK' });
+    } else {
+      res.json({ status: 'NG', message: 'Userテーブルにデータが見つかりませんでした' });
+    }
+  }).catch(error => {
+    console.error(error);
+    res.json({ status: 'NG', message: 'サーバーのDBのレコード数取得時ににエラーが発生しました' });
+  });
 });
 
 /* オンライン状態確認用Web API */
