@@ -76,6 +76,16 @@ body {
   right: 45px;
 }
 
+#cloud-icon {
+  position: absolute;
+  top: 12px;
+  right: 44px;
+}
+
+.user-info #cloud-icon {
+  position: static;
+}
+
 .user-info #twitter-icon {
   position: static;
   margin-right: 6px;

@@ -418,13 +418,13 @@ const maxTableWidth = Math.min(500, document.body.clientWidth);
 
 createDailyTable(maxTableWidth, thWidth, minTdWidth);
 
-// twitterにサインイン済みのときのみ、twitterアイコンをアクティブにする
+// twitterにサインイン済みのときのみ、トップページのクラウドアイコンを表示する
 fetcher.isAuthenticated().then(response => {
   console.log(response);
   switch(response.status) {
     case 'OK':
-      const twitterIcon = document.getElementById('twitter-icon');
-      twitterIcon.classList.add('active');
+      const cloudIcon = document.getElementById('cloud-icon');
+      cloudIcon.classList.remove('hidden');
       break;
     case 'NG':
       console.log(response.message);
